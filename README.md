@@ -1,2 +1,2 @@
 # Dishcovery
-A smart cooking companion
+Dishcovery is your smart cooking companion that helps you decide what to eat based on your personal food preferences and the ingredients you already have at home. Simply enter the ingredients in your kitchen, add any dietary choices or cravings, and Dishcovery instantly suggests creative, delicious dishes you can prepare. Whether you’re looking for a quick snack, a healthy meal, or something special, Dishcovery makes cooking easy, fun, and personalized
