@@ -1,37 +1,44 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { AuthProvider } from "./auth/AuthProvider";
-import ProtectedRoute from "./auth/ProtectedRoute";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Dev from "./pages/Dev"; // ← add this
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'mobx-react';
+import rootStore from './stores/rootStore';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Search from './pages/Search';
+import Recipe from './pages/Recipe';
+import Ingredients from './pages/Ingredients';
+import Favorites from './pages/Favorites';
+import Blog from './pages/Blog';
+import Contact from './pages/Contact';
+import './App.css';
 
-export default function App() {
+function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <nav
-          style={{
-            display: "flex",
-            gap: 12,
-            padding: 12,
-            borderBottom: "1px solid #eee",
-          }}
-        >
-          <Link to="/home">Home</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/dev">Dev</Link> {/* quick access */}
-        </nav>
-        <Routes>
-          <Route
-            path="/home"
-            element={<div style={{ padding: 16 }}>Home</div>}
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dev" element={<Dev />} /> {/* ← mount */}
-          {/* your other routes... */}
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <Provider {...rootStore}>
+      <Router>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-grow container mx-auto p-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="/ingredients/:name" element={<Ingredients />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </Provider>
   );
 }
+
+export default App;

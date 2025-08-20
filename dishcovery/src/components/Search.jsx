@@ -19,20 +19,20 @@ function Search() {
   };
 
   return (
-    <div>
+    <div id="search">
       <h2>Search Recipes</h2>
-      <IngredientInput onChange={setIngredients} />
+      {/* <IngredientInput onChange={setIngredients} />
       <CategoryInput onChange={setCategory} />
       <CountryInput onChange={setCountry} />
-      <DishNameInput onChange={setDishName} />
+      <DishNameInput onChange={setDishName} /> */}
       <button onClick={handleSearch}>Find</button>
-      {recipeStore.loading && <LoadingSpinner />}
-      {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
-      <div>
+      {/* {recipeStore.loading && <LoadingSpinner />}
+      {recipeStore.error && <ErrorMessage message={recipeStore.error} />} */}
+      {/* <div>
         {recipeStore.searchResults.map((recipe) => (
           <RecipeCard key={recipe.idMeal} recipe={recipe} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
