@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.55.0",
+    "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
     "mobx": "^6.13.7",
     "mobx-react": "^9.2.0",
