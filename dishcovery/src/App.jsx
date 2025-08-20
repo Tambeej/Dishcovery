@@ -14,15 +14,14 @@ import Search from './pages/Search';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
 import './App.css';
-import TopBar from './components/TopBar';
 
 function App() {
   return (
     <Provider {...rootStore}>
       <Router>
         <div className="min-h-screen flex flex-col">
-          <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} />
-          <Header />
+          {/* <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} /> */}
+          {/* <Header /> */}
           <main className="flex-grow container mx-auto p-4">
             <Routes>
               <Route path="/" element={<Home />} />
