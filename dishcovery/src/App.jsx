@@ -14,7 +14,7 @@ import Search from './pages/Search';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
 import './App.css';
-import TopBar from './components/TopBar';
+
 
 function App() {
   return (
