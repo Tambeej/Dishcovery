@@ -19,7 +19,7 @@ function Search() {
   };
 
   return (
-    <div>
+    <div id="search">
       <h2>Search Recipes</h2>
       {/* <IngredientInput onChange={setIngredients} />
       <CategoryInput onChange={setCategory} />

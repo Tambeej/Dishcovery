@@ -7,7 +7,7 @@ import rootStore from './stores/rootStore';
 import TopBar from './components/TopBar';
 import Home from './pages/Home';
 // import Login from './pages/Login';
-import Search from './pages/Search';
+import Search from './components/Search';
 // import Recipe from './pages/Recipe';
 // import Ingredients from './pages/Ingredients';
 // import Favorites from './pages/Favorites';
@@ -27,7 +27,6 @@ function App() {
               <Route path="/" element={<Home />} />
               {/* <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} /> */}
-              <Route path="/search" element={<Search />} />
               {/* <Route path="/recipe/:id" element={<Recipe />} />
               <Route path="/ingredients/:name" element={<Ingredients />} />
               <Route path="/favorites" element={<Favorites />} />
