@@ -1,9 +1,11 @@
-import userStore from './userStore';
-import recipeStore from './recipeStore';
+import userStore from "./userStore";
+import recipeStore from "./recipeStore";
 
-const rootStore = {
-  userStore,
-  recipeStore,
-};
+class RootStore {
+  userStore = userStore;
+  recipeStore = recipeStore;
+}
 
+
+const rootStore = new RootStore();
 export default rootStore;

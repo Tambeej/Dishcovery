@@ -15,4 +15,5 @@ class RecipeStore {
   async fetchRecipeDetails(id) {}
 }
 
-export const userStore = new UserStore();
+const recipeStore = new RecipeStore();
+export default recipeStore;
