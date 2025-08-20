@@ -3,7 +3,7 @@
 
 import { Link } from "react-router-dom";
 import "./Header.css";
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 
 function Header() {
   return (
