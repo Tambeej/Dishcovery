@@ -11,13 +11,12 @@ function Navbar() {
                     {/* Logo */}
                     <Link className="navbar-brand d-flex align-items-center" to="/home">
                         <img
-                            src="/img/logo/dishcovery-high-resolution-logo-grayscale-transparent.png"
+                            src="/img/logo/dishcovery-high-resolution-logo-transparent (1).png"
                             alt="Dishcovery Logo"
                             //   width="40"
                             height="40"
                             className="me-2"
                         />
-                        <span>Dishcovery</span>
                     </Link>
 
                     {/* Toggler */}
