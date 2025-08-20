@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import rootStore from './stores/rootStore';
+import TopBar from './components/TopBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -14,12 +15,14 @@ import Favorites from './pages/Favorites';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import './App.css';
+import TopBar from './components/TopBar';
 
 function App() {
   return (
     <Provider {...rootStore}>
       <Router>
         <div className="min-h-screen flex flex-col">
+          <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} />
           <Header />
           <main className="flex-grow container mx-auto p-4">
             <Routes>
