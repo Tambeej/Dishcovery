@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { inject, observer } from "mobx-react";
+import IngredientInput from "./IngredientInput"
 
 function Search() {
   const [ingredients, setIngredients] = useState([]);
@@ -21,8 +22,8 @@ function Search() {
   return (
     <div id="search">
       <h2>Search Recipes</h2>
-      {/* <IngredientInput onChange={setIngredients} />
-      <CategoryInput onChange={setCategory} />
+       <IngredientInput onChange={setIngredients} />
+      {/*<CategoryInput onChange={setCategory} />
       <CountryInput onChange={setCountry} />
       <DishNameInput onChange={setDishName} /> */}
       <button onClick={handleSearch}>Find</button>

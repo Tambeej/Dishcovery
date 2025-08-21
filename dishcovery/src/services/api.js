@@ -105,7 +105,7 @@
 import axios from "axios";
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
-async function getAllIngredients() {
+export async function getAllIngredients() {
   if (ALL_INGREDIENTS) return ALL_INGREDIENTS;
   const { data } = await axios.get(
     "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
@@ -125,7 +125,7 @@ async function expandIngredientTerm(term) {
   return matches.length ? matches : [term];
 }
 
-/** Your existing helper (unchanged) */
+/** Fetch meals that contain a given ingredient */
 async function filterByIngredient(ingredient) {
   if (!ingredient) return [];
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(
@@ -139,6 +139,7 @@ async function filterByIngredient(ingredient) {
   }));
 }
 
+/** Intersect multiple meal arrays by ID (AND semantics) */
 function intersectById(arrays) {
   if (!arrays.length) return [];
   const idCounts = new Map();
@@ -151,7 +152,7 @@ function intersectById(arrays) {
   const first = arrays[0];
   return first.filter((r) => idCounts.get(r.id) === needed);
 }
-
+/** Remove duplicate meals by ID */
 function dedupeById(list) {
   const seen = new Set();
   const out = [];
@@ -164,7 +165,7 @@ function dedupeById(list) {
   return out;
 }
 
-/** Optional: category fallback for common terms like "chicken" */
+/** Fetch meals belonging to a given category */
 async function filterByCategory(category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(
     category
