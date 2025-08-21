@@ -7,7 +7,7 @@ import "./Header.css";
 function Navbar() {
     return (
             <nav className="navbar navbar-expand-lg navbar-dark">
-                <div className="container">
+                <div className="container flex-row">
                     {/* Logo */}
                     <Link className="navbar-brand d-flex align-items-center" to="/home">
                         <img

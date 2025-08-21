@@ -14,7 +14,7 @@ function Header() {
         {/* Navbar Content */}
         <Navbar />
         {/* Hero Content */}
-        <div className="container hero-text flex-column ">
+        <div className="container hero-text">
           <h1>Dishcovery</h1>
           <p>
             Your smart cooking companion that helps you decide what to eat based
