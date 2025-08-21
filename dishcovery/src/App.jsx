@@ -13,6 +13,7 @@ import Search from "./components/Search";
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
 import Recipe from "./pages/Recipe";
+import RecipesPage from "./pages/RecipesPage";
 import "./App.css";
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="/category/:category" element={<RecipesPage />} />
+              {/* <Route path="/search" element={<RecipesPage />} />           */}
               {/* <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} /> */}
               {/* <Route path="/recipe/:id" element={<Recipe />} />
