@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { inject, observer } from "mobx-react";
+import IngredientInput from "./IngredientInput"
 
 function Search() {
   const [ingredients, setIngredients] = useState([]);
