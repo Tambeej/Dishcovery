@@ -113,12 +113,16 @@ export async function getAllMeals({ includeAreas = false } = {}) {
   const { data: catsData } = await axios.get(
     "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
   );
-  const categories = (catsData?.meals || []).map((c) => c.strCategory).filter(Boolean);
+  const categories = (catsData?.meals || [])
+    .map((c) => c.strCategory)
+    .filter(Boolean);
 
   for (const c of categories) {
     try {
       const { data } = await axios.get(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(c)}`
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(
+          c
+        )}`
       );
       for (const m of data?.meals || []) {
         if (!seen.has(m.idMeal)) {
@@ -136,12 +140,16 @@ export async function getAllMeals({ includeAreas = false } = {}) {
     const { data: areasData } = await axios.get(
       "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
     );
-    const areas = (areasData?.meals || []).map((a) => a.strArea).filter(Boolean);
+    const areas = (areasData?.meals || [])
+      .map((a) => a.strArea)
+      .filter(Boolean);
 
     for (const a of areas) {
       try {
         const { data } = await axios.get(
-          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(a)}`
+          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(
+            a
+          )}`
         );
         for (const m of data?.meals || []) {
           if (!seen.has(m.idMeal)) {
@@ -158,15 +166,12 @@ export async function getAllMeals({ includeAreas = false } = {}) {
   return out;
 }
 
-
 /** Filter meals by "country"/area (TheMealDB calls it Area). */
 export async function filterByCountry(country) {
   if (!country) return [];
 
   // Normalize input → Title Case to match API Areas (e.g., "American", "British")
-  const norm = String(country)
-    .trim()
-    .toLowerCase();
+  const norm = String(country).trim().toLowerCase();
 
   // Common synonyms mapping (extend as needed)
   const AREA_SYNONYMS = {
@@ -211,6 +216,13 @@ export async function filterByCountry(country) {
   }));
 }
 
+/** Get all available countries/areas from TheMealDB */
+export async function getAllCountries() {
+  const { data } = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+  );
+  return (data?.meals || []).map((x) => x.strArea).filter(Boolean);
+}
 
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
