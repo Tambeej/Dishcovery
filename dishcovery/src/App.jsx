@@ -7,11 +7,12 @@ import rootStore from "./stores/rootStore";
 import Home from "./pages/Home";
 // import Login from './pages/Login';
 import Search from "./components/Search";
-// import Recipe from './pages/Recipe';
 // import Ingredients from './pages/Ingredients';
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
+import Recipe from "./pages/Recipe";
+import RecipesPage from "./pages/RecipesPage";
 import "./App.css";
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="/category/:category" element={<RecipesPage />} />
+              {/* <Route path="/search" element={<RecipesPage />} />           */}
               {/* <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} /> */}
               {/* <Route path="/recipe/:id" element={<Recipe />} />

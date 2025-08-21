@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { inject, observer } from "mobx-react";
+import IngredientInput from "./IngredientInput";
+import CategoryInput from "./CategoryInput";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorMessage from "./ErrorMessage";
+import CountryInput from "./CountryInput";
+import DishNameInput from "./DishNameInput";
 
-function Search() {
+function Search({recipeStore}) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState("");
   const [country, setCountry] = useState("");
@@ -9,9 +15,9 @@ function Search() {
   const handleSearch = async () => {
     const params = {
       ingredients: ingredients.join(","),
-      category: category,
-      country: country,
-      dishName: dishName,
+      category: category.join(","),
+      country: country.join(","),
+      dishName: dishName.join(","),
       diet: diet || userStore.mealPreferences,
       allergies: userStore.allergies,
     };
@@ -19,22 +25,24 @@ function Search() {
   };
 
   return (
-    <div id="search">
-      <h2>Search Recipes</h2>
-      {/* <IngredientInput onChange={setIngredients} />
+    <div id="search" className="container-fluid ">
+      <div className="container text-center my-5 flex-wrap">
+        <h2>Search Recipes</h2>
+        <IngredientInput onChange={setIngredients} />
       <CategoryInput onChange={setCategory} />
-      <CountryInput onChange={setCountry} />
+       {/* <CountryInput onChange={setCountry} />
       <DishNameInput onChange={setDishName} /> */}
-      <button onClick={handleSearch}>Find</button>
-      {/* {recipeStore.loading && <LoadingSpinner />}
-      {recipeStore.error && <ErrorMessage message={recipeStore.error} />} */}
-      {/* <div>
+        <button onClick={handleSearch}> Find → </button>
+        {recipeStore.loading && <LoadingSpinner />}
+      {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
+        {/* <div>
         {recipeStore.searchResults.map((recipe) => (
           <RecipeCard key={recipe.idMeal} recipe={recipe} />
         ))}
       </div> */}
+      </div>
     </div>
   );
 }
 
-export default inject("recipeStore","userStore")(observer(Search));
+export default inject("recipeStore", "userStore")(observer(Search));

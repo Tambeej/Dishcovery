@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Search from "../components/Search";
-// import Categories from "../components/Categories";
+import Categories from "../components/Categories";
 // import LatestMeals from "../components/LatestMeals";
 // import Ingredients from "../components/Ingredients";
 // import RandomMeals from "../components/RandomMeals";
@@ -12,11 +12,11 @@ const Home = () => (
   <div>
     <Header />
     <Search />
-    {/* <Categories /> */}
+    <Categories />
     {/* <LatestMeals /> */}
     {/* <Ingredients /> */}
-    {/* <Ingredients /> */}
-    {/* <Ingredients /> */}
+    {/* <RandomMeals /> */}
+    {/* <Blog /> */}
   </div>
 );
 

@@ -214,7 +214,7 @@ export async function filterByCountry(country) {
 
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
-async function getAllIngredients() {
+export async function getAllIngredients() {
   if (ALL_INGREDIENTS) return ALL_INGREDIENTS;
   const { data } = await axios.get(
     "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
@@ -274,7 +274,7 @@ function dedupeById(list) {
 }
 
 /** Optional: category fallback for common terms like "chicken" */
-async function filterByCategory(category) {
+export async function filterByCategory(category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(
     category
   )}`;
@@ -286,6 +286,12 @@ async function filterByCategory(category) {
   }));
 }
 
+export async function getCategories() {
+  const { data } = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
+  );
+  return (data?.meals || []).map((c) => c.strCategory);
+}
 /**
  * Search recipes by ingredients (AND). Now with fuzzy ingredient expansion.
  * - For each input term, expand to all canonical ingredient names containing the term

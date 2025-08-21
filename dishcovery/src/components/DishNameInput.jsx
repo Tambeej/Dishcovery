@@ -1,44 +1,44 @@
 import { inject, observer } from "mobx-react";
 import React, { useState, useEffect } from "react";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorMessage from "./ErrorMessage";
 
-function IngredientInput({ disabled, onChange, recipeStore }) {
-  const [selectedIngredient, setSelectedIngredient] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+function DishNameInput({ disabled, onChange, recipeStore }) {
+  const [selectedName, setSelectedName] = useState("");
+  const [names, setNames] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (!recipeStore.ingredientList.length) {
-      recipeStore.getAllIngredients();
+    if (!recipeStore.areas.length) {
+      recipeStore.fetchAreas();
     }
   }, [recipeStore]);
 
-  const addIngredient = () => {
-    if (selectedIngredient && !ingredients.includes(selectedIngredient)) {
-      const updated = [...ingredients, selectedIngredient];
-      setIngredients(updated);
+  const addName = () => {
+    if (selectedName && !names.includes(selectedName)) {
+      const updated = [...names, selectedName];
+      setNames(updated);
       onChange(updated);
-      setSelectedIngredient("");
+      setSelectedName("");
       setSuggestions([]);
     }
   };
 
-  const removeIngredient = (index) => {
-    const newIngredients = ingredients.filter((_, i) => i !== index);
-    setIngredients(newIngredients);
-    onChange(newIngredients);
+  const removeName = (index) => {
+    const newNames = names.filter((_, i) => i !== index);
+    setNames(newNames);
+    onChange(newNames);
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setSelectedIngredient(value);
+    setSelectedName(value);
 
     if (value.trim()) {
-      const filtered = recipeStore.ingredientList.filter((ing) =>
+      const filtered = recipeStore.names.filter((ing) =>
         ing.toLowerCase().includes(value.toLowerCase())
       );
-      setSuggestions(filtered.slice(0, 5)); 
+      setSuggestions(filtered.slice(0, 5));
     } else {
       setSuggestions([]);
     }
@@ -53,8 +53,8 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
         <input
           type="text"
           className="form-control"
-          placeholder="Browse by Ingredient"
-          value={selectedIngredient}
+          placeholder="Browse by Name"
+          value={selectedName}
           onChange={handleInputChange}
           disabled={disabled}
         />
@@ -62,21 +62,24 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
         <button
           type="button"
           className="btn btn-success"
-          onClick={addIngredient}
-          disabled={!selectedIngredient}
+          onClick={addName}
+          disabled={!selectedName}
         >
           Add
         </button>
       </div>
 
       {suggestions.length > 0 && (
-        <ul className="list-group position-absolute w-100" style={{ zIndex: 10 }}>
+        <ul
+          className="list-group position-absolute w-100"
+          style={{ zIndex: 10 }}
+        >
           {suggestions.map((item) => (
             <li
               key={item}
               className="list-group-item list-group-item-action"
               onClick={() => {
-                setSelectedIngredient(item);
+                setSelectedName(item);
                 setSuggestions([]);
               }}
             >
@@ -87,13 +90,13 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
       )}
 
       <div className="mt-3">
-        {ingredients.map((item, index) => (
+        {names.map((item, index) => (
           <span key={item} className="badge bg-primary me-2">
             {item}{" "}
             <button
               type="button"
               className="btn-close btn-close-white ms-1"
-              onClick={() => removeIngredient(index)}
+              onClick={() => removeName(index)}
               aria-label="Remove"
             ></button>
           </span>
@@ -103,4 +106,4 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
   );
 }
 
-export default inject("recipeStore")(observer(IngredientInput));
+export default inject("recipeStore")(observer(DishNameInput));

@@ -16,5 +16,13 @@
 .hero-section nav {
   position: relative;
   z-index: 2;
-  background: transparent !important; /* let bg show */
+  background: transparent; /* let bg show */
 }
+.nav-item>a {
+  color: #ECF0FF;
+}
+
+.hero-text{
+  color:#fff
+}
+.hero-section  {z-index: 5;}
