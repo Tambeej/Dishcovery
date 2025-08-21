@@ -1,10 +1,18 @@
-
-.container{
-   max-width: 1170px;
+.container-fluid {
+  min-height: 90vh;
+  display: flex; /* flexbox layout */
+  flex-direction: column;
+}
+.container {
+  max-width: 1170px;
+  margin: auto; /* horizontal centering */
+  flex: 1; /* take available height */
+  display: flex; /* flex inside container */
+  justify-content: center; /* horizontal align */
+  align-items: center; /* vertical align */
+  text-align: center;
 }
 
 
-
 @media (prefers-reduced-motion: no-preference) {
-
 }
