@@ -15,8 +15,8 @@ const Home = () => (
     {/* <Categories /> */}
     {/* <LatestMeals /> */}
     {/* <Ingredients /> */}
-    {/* <Ingredients /> */}
-    {/* <Ingredients /> */}
+    {/* <RandomMeals /> */}
+    {/* <Blog /> */}
   </div>
 );
 
