@@ -1,5 +1,10 @@
+#recipes-page h1, #recipe-page h1{    
+  background-color: #0006;
+    padding: 10%;
+    border-radius: 10px;
+  }
 .hero {
-  background: url("/img/hero-bg.jpg") center/cover no-repeat;
+  background: url("/img/hero.jpg") center/cover no-repeat;
   color: #fff;
 }
 

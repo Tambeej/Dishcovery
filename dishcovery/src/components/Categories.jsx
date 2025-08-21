@@ -10,7 +10,7 @@ const Categories = () => {
   return (
     <div id="categories" className="container-fluid py-5 bg-light">
       <div className="container text-center">
-        <h2 className="mb-4 text-success fw-bold">Categories</h2>
+        <h2>Categories</h2>
 
         {/* Tabs  */}
         <div className="d-flex justify-content-center gap-3 mb-5">

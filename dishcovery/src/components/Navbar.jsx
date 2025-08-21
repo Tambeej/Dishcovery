@@ -9,7 +9,7 @@ function Navbar() {
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="container flex-row">
                     {/* Logo */}
-                    <Link className="navbar-brand d-flex align-items-center" to="/home">
+                    <Link className="navbar-brand d-flex align-items-center" to="/">
                         <img
                             src="/img/logo/dishcovery-high-resolution-logo-transparent (1).png"
                             alt="Dishcovery Logo"
@@ -39,7 +39,7 @@ function Navbar() {
                     >
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/home">
+                                <Link className="nav-link" to="/">
                                     Home
                                 </Link>
                             </li>

@@ -1,78 +1,92 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import Navbar from "../components/NavBar"; // your existing navbar
-import "./RecipesPage.css";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { filterByCategory, searchRecipes, getCategories } from "../services/api";
+import Navbar from "../components/NavBar";
+import RecipeCard from "../components/RecipeCard";
+
 
 const RecipesPage = () => {
   const { category } = useParams();   // e.g. "/vegan", "/american"
-  const location = useLocation();     // to support search query
-  const [recipes, setRecipes] = useState([]);
-  const [pageTitle, setPageTitle] = useState("");
+  const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if this is a search result
-    const searchParams = new URLSearchParams(location.search);
-    const query = searchParams.get("q");
+    async function fetchData() {
+      setLoading(true);
 
-    if (query) {
-      setPageTitle(`Search results for "${query}"`);
-      // 🔥 Fetch recipes by search API
-      fetch(`/api/recipes/search?q=${query}`)
-        .then(res => res.json())
-        .then(data => setRecipes(data))
-        .catch(console.error);
-    } else if (category) {
-      setPageTitle(category.charAt(0).toUpperCase() + category.slice(1));
-      // 🔥 Fetch recipes by category
-      fetch(`/api/recipes/category/${category}`)
-        .then(res => res.json())
-        .then(data => setRecipes(data))
-        .catch(console.error);
-    }
-  }, [category, location.search]);
+      let results = [];
+      try {
+        const allCategories = await getCategories(); // gives array of names
+
+        // Handle "misc" (Preferences → everything except Vegan + Vegetarian)
+        if (category === "misc") {
+          const miscCategories = allCategories.filter(
+            (c) => c.toLowerCase() !== "vegan" && c.toLowerCase() !== "vegetarian"
+          );
+          let allMeals = [];
+          for (const cat of miscCategories) {
+            const data = await filterByCategory(cat);
+            allMeals = [...allMeals, ...data];
+          }
+          setMeals(allMeals);
+          return;
+        }
+
+        // Handle "main" (Dishes → everything except Starter, Breakfast, Side, Dessert)
+        if (category === "main") {
+          const notMain = ["Starter", "Breakfast", "Side", "Dessert"];
+          const mainCategories = allCategories.filter(
+            (c) => !notMain.includes(c)
+          );
+
+          let allMeals = [];
+          for (const cat of mainCategories) {
+            const data = await filterByCategory(cat);
+            allMeals = [...allMeals, ...data];
+          }
+          setMeals(allMeals);
+          return;
+        }
+
+        // Default: just fetch meals by single category
+        const data = await filterByCategory(category);
+        setMeals(data);
+      } catch (err) {
+        console.error("Error fetching meals:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [category]);
+
+  if (loading) return <p className="text-center mt-5">Loading...</p>;
 
   return (
-    <div className="recipes-page">
-      {/* Hero Section */}
-      <div className="hero bg-light py-5 shadow-sm mb-5">
-        <Navbar />
-        <div className="container text-center">
-          <h1 className="text-success fw-bold">{pageTitle}</h1>
+    <>
+      <header id="recipe-page" className="hero-section">
+        {/* Hero Section */}
+        <div className="hero container-fluid">
+          <Navbar />
+          <div className="container hero-text text-center">
+            <h1>{category === "misc" ? "Miscellaneous Recipes" : category}</h1>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Cards Grid */}
-      <div className="container">
-        <div className="row g-4">
-          {recipes.map((recipe, index) => (
-            <div key={index} className="col-12 col-sm-6 col-lg-3">
-              <div className="card recipe-card h-100 shadow-sm">
-                <img
-                  src={recipe.image}
-                  alt={recipe.title}
-                  className="card-img-top"
-                  style={{ height: "200px", objectFit: "cover" }}
-                />
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{recipe.title}</h5>
-                  <p className="card-text flex-grow-1">{recipe.description}</p>
-                  <a href={`/recipe/${recipe.id}`} className="btn btn-outline-success mt-auto">
-                    View Recipe
-                  </a>
-                </div>
-              </div>
+      {/* Body */}
+      <div className="container mx-auto px-6 py-10">
+        <div className="row">
+          {meals.map((recipe) => (
+            <div key={recipe.id} className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"> {/* ✅ changed */}
+              <RecipeCard recipe={recipe} />
             </div>
           ))}
-
-          {recipes.length === 0 && (
-            <div className="text-center py-5">
-              <h4>No recipes found</h4>
-            </div>
-          )}
         </div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
 export default RecipesPage;

@@ -1,27 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./Categories.css";
 
 const preferences = [
   {
-    title: "Meat Friendly",
+    title: "Miscellaneous",
     img: "/img/categories/beef.png",
     desc: "A variety of dishes rich in meat for those who enjoy protein-packed meals.",
+    category: "misc"
   },
   {
     title: "Vegan",
     img: "/img/categories/vegan.png",
     desc: "Plant-based meals full of flavor, perfect for a healthy lifestyle.",
+    category: "Vegan"
   },
   {
     title: "Vegetarian",
     img: "/img/categories/vegetarian.png",
     desc: "Delicious meals without meat, combining vegetables, grains, and dairy.",
+    category: "Vegetarian" 
   },
 ];
 
@@ -30,7 +32,6 @@ const Preferences = () => (
     modules={[Pagination]}
     spaceBetween={20}
     slidesPerView={1}
-    
     pagination={{ clickable: true }}
     breakpoints={{
       768: { slidesPerView: 2 },
@@ -43,13 +44,12 @@ const Preferences = () => (
               <img
                 src={data.img}
                 alt={data.title}
-                className="card-img"
-               
+                className="card-img"             
               />
               <div className="card-body">
                 <h5 className="card-title">{data.title}</h5>
                 <p className="card-text">{data.desc}</p>
-                <Link to={`/category/${data.title.toLowerCase()}`} className="fw-bold">
+                <Link to={`/category/${data.category.toLowerCase()}`} className="fw-bold">            
                   Learn More
                 </Link>
               </div>
