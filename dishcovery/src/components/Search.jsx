@@ -5,6 +5,7 @@ import CategoryInput from "./CategoryInput";
 import LoadingSpinner from "./LoadingSpinner";
 import ErrorMessage from "./ErrorMessage";
 import CountryInput from "./CountryInput";
+import DishNameInput from "./DishNameInput";
 
 function Search({recipeStore}) {
   const [ingredients, setIngredients] = useState([]);
@@ -14,9 +15,9 @@ function Search({recipeStore}) {
   const handleSearch = async () => {
     const params = {
       ingredients: ingredients.join(","),
-      category: category,
-      country: country,
-      dishName: dishName,
+      category: category.join(","),
+      country: country.join(","),
+      dishName: dishName.join(","),
       diet: diet || userStore.mealPreferences,
       allergies: userStore.allergies,
     };
