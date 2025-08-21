@@ -21,7 +21,7 @@ function App() {
         <div className="min-h-screen flex flex-col">
           {/* <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} /> */}
           {/* <Header /> */}
-          <main className="flex-grow container mx-auto p-4">
+          <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/recipe/:id" element={<Recipe />} />

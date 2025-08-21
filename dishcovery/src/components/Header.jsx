@@ -3,13 +3,14 @@
 
 import { Link } from "react-router-dom";
 import "./Header.css";
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 
 function Header() {
   return (
     <header className="hero-section">
       {/* Overlay */}
       <div className="overlay"></div>
+      <div className="container">
       <Navbar />
       {/* Hero Content */}
       <div>
@@ -20,6 +21,7 @@ function Header() {
           at home
         </p>
         <Link to="/search">Lets Start</Link>
+      </div>
       </div>
     </header>
   );
