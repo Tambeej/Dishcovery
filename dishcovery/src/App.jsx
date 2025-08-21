@@ -7,7 +7,6 @@ import rootStore from "./stores/rootStore";
 import Home from "./pages/Home";
 // import Login from './pages/Login';
 import Search from "./components/Search";
-// import Recipe from './pages/Recipe';
 // import Ingredients from './pages/Ingredients';
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';

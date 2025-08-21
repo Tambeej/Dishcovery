@@ -37,9 +37,7 @@ const Recipe = ({ recipeStore }) => {
 
   return (
     <>
-      <header className="hero-section" style={{ backgroundImage: `url(${recipe.image})` }}>
-        {/* Overlay */}
-        {/* <div className="overlay"></div> */}
+      <header id="recipe-page" className="hero-section" style={{ backgroundImage: `url(${recipe.image})` }}>
         <div className="container-fluid ">
           {/* Navbar Content */}
           <Navbar />
