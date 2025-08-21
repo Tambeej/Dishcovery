@@ -1,4 +1,5 @@
-import React from 'react';
+// Loader for async calls.
+import React from "react";
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center">

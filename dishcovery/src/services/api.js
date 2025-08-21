@@ -104,6 +104,114 @@
 
 import axios from "axios";
 
+/** Get (almost) all meals by sweeping categories (and optionally areas) */
+export async function getAllMeals({ includeAreas = false } = {}) {
+  const seen = new Set();
+  const out = [];
+
+  // 1) Sweep by CATEGORY
+  const { data: catsData } = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
+  );
+  const categories = (catsData?.meals || []).map((c) => c.strCategory).filter(Boolean);
+
+  for (const c of categories) {
+    try {
+      const { data } = await axios.get(
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(c)}`
+      );
+      for (const m of data?.meals || []) {
+        if (!seen.has(m.idMeal)) {
+          seen.add(m.idMeal);
+          out.push({ id: m.idMeal, title: m.strMeal, image: m.strMealThumb });
+        }
+      }
+    } catch {
+      /* skip a failing category */
+    }
+  }
+
+  // 2) (Optional) Sweep by AREA to catch any stragglers not exposed via categories
+  if (includeAreas) {
+    const { data: areasData } = await axios.get(
+      "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+    );
+    const areas = (areasData?.meals || []).map((a) => a.strArea).filter(Boolean);
+
+    for (const a of areas) {
+      try {
+        const { data } = await axios.get(
+          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(a)}`
+        );
+        for (const m of data?.meals || []) {
+          if (!seen.has(m.idMeal)) {
+            seen.add(m.idMeal);
+            out.push({ id: m.idMeal, title: m.strMeal, image: m.strMealThumb });
+          }
+        }
+      } catch {
+        /* skip a failing area */
+      }
+    }
+  }
+
+  return out;
+}
+
+
+/** Filter meals by "country"/area (TheMealDB calls it Area). */
+export async function filterByCountry(country) {
+  if (!country) return [];
+
+  // Normalize input → Title Case to match API Areas (e.g., "American", "British")
+  const norm = String(country)
+    .trim()
+    .toLowerCase();
+
+  // Common synonyms mapping (extend as needed)
+  const AREA_SYNONYMS = {
+    usa: "American",
+    "united states": "American",
+    american: "American",
+    us: "American",
+    uk: "British",
+    england: "British",
+    british: "British",
+    uae: "Unknown", // no specific UAE area in API; "Unknown" exists
+    korea: "Unknown", // API has "Unknown" but no split KR
+    scotland: "British",
+  };
+
+  const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const area =
+    AREA_SYNONYMS[norm] ||
+    // e.g., "italian", "mexican", "french" should work if capitalized
+    titleCase(norm);
+
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(
+    area
+  )}`;
+
+  const { data } = await axios.get(url);
+
+  // If nothing returned and we mapped to a synonym, optionally try the raw Title Case
+  let meals = data?.meals || [];
+  if (!meals.length && AREA_SYNONYMS[norm]) {
+    const fallbackUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(
+      titleCase(norm)
+    )}`;
+    const { data: d2 } = await axios.get(fallbackUrl);
+    meals = d2?.meals || [];
+  }
+
+  return meals.map((m) => ({
+    id: m.idMeal,
+    title: m.strMeal,
+    image: m.strMealThumb,
+  }));
+}
+
+
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
 async function getAllIngredients() {
