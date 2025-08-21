@@ -12,6 +12,7 @@ import Search from "./components/Search";
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
+import Recipe from "./pages/Recipe";
 import "./App.css";
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
               {/* <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} /> */}
               {/* <Route path="/recipe/:id" element={<Recipe />} />

@@ -1,3 +1,4 @@
+// Loader for async calls.
 import React from 'react';
 
 const LoadingSpinner = () => (
