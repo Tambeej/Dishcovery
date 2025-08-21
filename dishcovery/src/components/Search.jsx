@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { inject, observer } from "mobx-react";
-import IngredientInput from "./IngredientInput"
+import IngredientInput from "./IngredientInput";
+import CategoryInput from "./CategoryInput";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorMessage from "./ErrorMessage";
+import CountryInput from "./CountryInput";
 
-function Search() {
+function Search({recipeStore}) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState("");
   const [country, setCountry] = useState("");
@@ -21,15 +25,15 @@ function Search() {
 
   return (
     <div id="search" className="container-fluid ">
-      <div className="container text-center my-5">
+      <div className="container text-center my-5 flex-wrap">
         <h2>Search Recipes</h2>
-        {/* <IngredientInput onChange={setIngredients} />
+        <IngredientInput onChange={setIngredients} />
       <CategoryInput onChange={setCategory} />
-      <CountryInput onChange={setCountry} />
+       {/* <CountryInput onChange={setCountry} />
       <DishNameInput onChange={setDishName} /> */}
         <button onClick={handleSearch}> Find → </button>
-        {/* {recipeStore.loading && <LoadingSpinner />}
-      {recipeStore.error && <ErrorMessage message={recipeStore.error} />} */}
+        {recipeStore.loading && <LoadingSpinner />}
+      {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
         {/* <div>
         {recipeStore.searchResults.map((recipe) => (
           <RecipeCard key={recipe.idMeal} recipe={recipe} />

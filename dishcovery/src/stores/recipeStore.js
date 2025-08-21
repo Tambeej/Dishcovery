@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import {
+  getCategories,
   searchRecipes,
   getRecipeById,
   getAllIngredients,
