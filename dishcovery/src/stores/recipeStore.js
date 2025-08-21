@@ -1,5 +1,6 @@
-import { makeAutoObservable } from "mobx";
-import { searchRecipes, getRecipeById} from "../services/api";
+
+import { makeAutoObservable, runInAction } from "mobx";
+import { searchRecipes, getRecipeById } from "../services/api";
 
 class RecipeStore {
   searchResults = [];
@@ -8,33 +9,54 @@ class RecipeStore {
   error = null;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {}, { autoBind: true });
   }
 
   async fetchRecipes(params) {
-    this.loading = true;
-    this.error = null;
-    try {
-      this.searchResults = await searchRecipes(params);
-    } catch (err) {
-      this.error = err.message;
-    }
-    this.loading = false;
+    runInAction(() => {
+      this.loading = true;
+      this.error = null;
+    });
 
+    try {
+      const results = await searchRecipes(params);
+      runInAction(() => {
+        this.searchResults = results;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
   }
 
   async fetchRecipeDetails(id) {
-    this.loading = true;
-    this.error = null;
+    runInAction(() => {
+      this.loading = true;
+      this.error = null;
+    });
+
     try {
-      this.currentRecipe = await getRecipeById(id);
+      const recipe = await getRecipeById(id);
+      console.log(`id :${id}`);
+      console.log(recipe);
+      runInAction(() => {
+        this.currentRecipe = recipe;
+      });
     } catch (err) {
-      this.error = err.message;
+      runInAction(() => {
+        this.error = err.message;
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
     }
-    this.loading = false;
-  
   }
 }
 
-const recipeStore = new RecipeStore();
-export default recipeStore;
+export default new RecipeStore();

@@ -103,7 +103,6 @@
 // }
 
 import axios from "axios";
-
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
 async function getAllIngredients() {
@@ -234,6 +233,7 @@ export async function getRecipeById(id) {
     id
   )}`;
   const { data } = await axios.get(url);
+  console.log(data);
   const meal = data?.meals?.[0];
   if (!meal) return null;
 
