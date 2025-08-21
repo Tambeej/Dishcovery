@@ -18,3 +18,7 @@
   z-index: 2;
   background: transparent !important; /* let bg show */
 }
+.hero-text{
+  color:#fff
+}
+.hero-section  {z-index: 5;}

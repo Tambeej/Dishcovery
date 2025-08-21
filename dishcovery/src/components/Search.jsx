@@ -20,22 +20,24 @@ function Search() {
   };
 
   return (
-    <div id="search">
-      <h2>Search Recipes</h2>
-       <IngredientInput onChange={setIngredients} />
-      {/*<CategoryInput onChange={setCategory} />
+    <div id="search" className="container-fluid ">
+      <div className="container text-center my-5">
+        <h2>Search Recipes</h2>
+        {/* <IngredientInput onChange={setIngredients} />
+      <CategoryInput onChange={setCategory} />
       <CountryInput onChange={setCountry} />
       <DishNameInput onChange={setDishName} /> */}
-      <button onClick={handleSearch}>Find</button>
-      {/* {recipeStore.loading && <LoadingSpinner />}
+        <button onClick={handleSearch}>Find</button>
+        {/* {recipeStore.loading && <LoadingSpinner />}
       {recipeStore.error && <ErrorMessage message={recipeStore.error} />} */}
-      {/* <div>
+        {/* <div>
         {recipeStore.searchResults.map((recipe) => (
           <RecipeCard key={recipe.idMeal} recipe={recipe} />
         ))}
       </div> */}
+      </div>
     </div>
   );
 }
 
-export default inject("recipeStore","userStore")(observer(Search));
+export default inject("recipeStore", "userStore")(observer(Search));
