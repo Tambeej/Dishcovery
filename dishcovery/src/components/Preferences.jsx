@@ -27,32 +27,33 @@ const preferences = [
 
 const Preferences = () => (
   <Swiper
-    modules={[Navigation, Pagination]}
+    modules={[Pagination]}
     spaceBetween={20}
     slidesPerView={1}
-    navigation
+    
     pagination={{ clickable: true }}
     breakpoints={{
       768: { slidesPerView: 2 },
       992: { slidesPerView: 3 },
     }}
   >
-    {preferences.map((item, index) => (
-      <SwiperSlide key={index}>
-        <div className="card category-card">
-          <img
-            src={item.img}
-            alt={item.title}
-            className="card-img"
-          />
-          <div className="card-body d-flex flex-column">
-            <h5 className="card-title">{item.title}</h5>
-            <p className="card-text flex-grow-1">{item.desc}</p>
-            <Link to={`/category/${item.title.toLowerCase()}`} className="text-success fw-bold">
-              Learn More →
-            </Link>
-          </div>
-        </div>
+    {preferences.map((data, index) => (
+          <SwiperSlide key={index} className="col-md-4 col-lg-3">    
+            <div className="card h-100 shadow-sm border-0 category-card d-flex flex-column">
+              <img
+                src={data.img}
+                alt={data.title}
+                className="card-img"
+               
+              />
+              <div className="card-body">
+                <h5 className="card-title">{data.title}</h5>
+                <p className="card-text">{data.desc}</p>
+                <Link to={`/category/${data.title.toLowerCase()}`} className="fw-bold">
+                  Learn More
+                </Link>
+              </div>
+            </div>   
       </SwiperSlide>
     ))}
 
