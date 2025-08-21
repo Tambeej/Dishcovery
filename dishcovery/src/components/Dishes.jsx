@@ -38,10 +38,10 @@ const dishes = [
 const Dishes = () => (
   
     <Swiper
-      modules={[Navigation, Pagination]}
+      modules={[Pagination]}
       spaceBetween={20}
       slidesPerView={1}
-      navigation
+      
       pagination={{ clickable: true }}
       breakpoints={{
         768: { slidesPerView: 2 },
@@ -60,8 +60,8 @@ const Dishes = () => (
           <div className="card-body">
             <h5 className="card-title">{data.title}</h5>
             <p className="card-text">{data.desc}</p>
-            <Link to={`/category/${data.title.toLowerCase()}`} className="text-success fw-bold">
-              Learn More →
+            <Link to={`/category/${data.title.toLowerCase()}`} className="fw-bold">
+              Learn More
             </Link>
           </div>
         </div>   

@@ -2,6 +2,7 @@
   min-height: 90vh;
   display: flex; /* flexbox layout */
   flex-direction: column;
+  padding: 0;
 }
 .container {
   max-width: 1170px;

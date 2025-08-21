@@ -27,7 +27,7 @@ function Search() {
       <CategoryInput onChange={setCategory} />
       <CountryInput onChange={setCountry} />
       <DishNameInput onChange={setDishName} /> */}
-        <button onClick={handleSearch}>Find</button>
+        <button onClick={handleSearch}> Find → </button>
         {/* {recipeStore.loading && <LoadingSpinner />}
       {recipeStore.error && <ErrorMessage message={recipeStore.error} />} */}
         {/* <div>
