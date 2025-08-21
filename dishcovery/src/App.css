@@ -11,6 +11,7 @@
   justify-content: center; /* horizontal align */
   align-items: center; /* vertical align */
   text-align: center;
+  flex-direction: column;
 }
 
 
