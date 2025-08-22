@@ -113,12 +113,16 @@ export async function getAllMeals({ includeAreas = false } = {}) {
   const { data: catsData } = await axios.get(
     "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
   );
-  const categories = (catsData?.meals || []).map((c) => c.strCategory).filter(Boolean);
+  const categories = (catsData?.meals || [])
+    .map((c) => c.strCategory)
+    .filter(Boolean);
 
   for (const c of categories) {
     try {
       const { data } = await axios.get(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(c)}`
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(
+          c
+        )}`
       );
       for (const m of data?.meals || []) {
         if (!seen.has(m.idMeal)) {
@@ -136,12 +140,16 @@ export async function getAllMeals({ includeAreas = false } = {}) {
     const { data: areasData } = await axios.get(
       "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
     );
-    const areas = (areasData?.meals || []).map((a) => a.strArea).filter(Boolean);
+    const areas = (areasData?.meals || [])
+      .map((a) => a.strArea)
+      .filter(Boolean);
 
     for (const a of areas) {
       try {
         const { data } = await axios.get(
-          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(a)}`
+          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(
+            a
+          )}`
         );
         for (const m of data?.meals || []) {
           if (!seen.has(m.idMeal)) {
@@ -158,15 +166,12 @@ export async function getAllMeals({ includeAreas = false } = {}) {
   return out;
 }
 
-
 /** Filter meals by "country"/area (TheMealDB calls it Area). */
 export async function filterByCountry(country) {
   if (!country) return [];
 
   // Normalize input → Title Case to match API Areas (e.g., "American", "British")
-  const norm = String(country)
-    .trim()
-    .toLowerCase();
+  const norm = String(country).trim().toLowerCase();
 
   // Common synonyms mapping (extend as needed)
   const AREA_SYNONYMS = {
@@ -211,7 +216,6 @@ export async function filterByCountry(country) {
   }));
 }
 
-
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
 export async function getAllIngredients() {
@@ -235,7 +239,7 @@ async function expandIngredientTerm(term) {
 }
 
 /** Your existing helper (unchanged) */
-async function filterByIngredient(ingredient) {
+export async function filterByIngredient(ingredient) {
   if (!ingredient) return [];
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(
     ingredient
@@ -261,7 +265,7 @@ function intersectById(arrays) {
   return first.filter((r) => idCounts.get(r.id) === needed);
 }
 
-function dedupeById(list) {
+export function dedupeById(list) {
   const seen = new Set();
   const out = [];
   for (const r of list) {

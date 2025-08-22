@@ -30,8 +30,8 @@ function Search({recipeStore}) {
         <h2>Search Recipes</h2>
         <IngredientInput onChange={setIngredients} />
       <CategoryInput onChange={setCategory} />
-       {/* <CountryInput onChange={setCountry} />
-      <DishNameInput onChange={setDishName} /> */}
+        {/* <CountryInput onChange={setCountry} /> */}
+      <DishNameInput onChange={setDishName} />
         <button onClick={handleSearch}> Find → </button>
         {recipeStore.loading && <LoadingSpinner />}
       {recipeStore.error && <ErrorMessage message={recipeStore.error} />}

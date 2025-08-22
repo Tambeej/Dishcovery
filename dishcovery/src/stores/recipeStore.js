@@ -1,5 +1,9 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import {
+  getAllMeals,
+  filterByCategory,
+  dedupeById,
+  filterByIngredient,
   getCategories,
   searchRecipes,
   getRecipeById,
@@ -15,9 +19,31 @@ class RecipeStore {
   categories = [];
   areas = [];
   randomRecipe = null;
+  meals = [];
+  names = [];
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  async getAllMealNames() {
+    this.loading = true;
+    try {
+      const data = await getAllMeals();
+
+      runInAction(() => {
+        this.meals = data.meals || [];
+        this.names = this.meals.map((m) => m.strMeal);
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
   }
 
   //Search recipes
@@ -161,6 +187,127 @@ class RecipeStore {
       });
     } finally {
       runInAction(() => {
+        this.loading = false;
+      });
+    }
+  }
+  async fetchRecipes({
+    ingredients = [],
+    categories = [],
+    countries = [],
+    dishNames = [],
+  }) {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      const resultsPerFilter = [];
+
+      if (ingredients.length > 0) {
+        const lists = await Promise.all(
+          ingredients.map(async (ing) => {
+            const { data } = await filterByIngredient(ing);
+            return (data?.meals || []).map((meal) => ({
+              id: meal.idMeal,
+              title: meal.strMeal,
+              image: meal.strMealThumb,
+              category: meal.strCategory,
+              area: meal.strArea,
+              tags: meal.strTags
+                ? meal.strTags.split(",").map((t) => t.trim())
+                : [],
+              instructions: meal.strInstructions,
+              youtube: meal.strYoutube,
+              source: meal.strSource,
+              ingredients,
+            }));
+          })
+        );
+        resultsPerFilter.push(dedupeById(lists.flat()));
+      }
+
+      // --- Categories ---
+      if (categories.length > 0) {
+        const lists = await Promise.all(
+          ingredients.map(async (ing) => {
+            const { data } = await filterByCategory(ing);
+            return (data?.meals || []).map((meal) => ({
+              id: meal.idMeal,
+              title: meal.strMeal,
+              image: meal.strMealThumb,
+              category: meal.strCategory,
+              area: meal.strArea,
+              tags: meal.strTags
+                ? meal.strTags.split(",").map((t) => t.trim())
+                : [],
+              instructions: meal.strInstructions,
+              youtube: meal.strYoutube,
+              source: meal.strSource,
+              ingredients,
+            }));
+          })
+        );
+        resultsPerFilter.push(dedupeById(lists.flat()));
+      }
+
+      // --- Countries / Areas ---
+      if (countries.length > 0) {
+        const lists = await Promise.all(
+          ingredients.map(async (ing) => {
+            const { data } = await filterByCountry(ing);
+            return (data?.meals || []).map((m) => ({
+              id: m.idMeal,
+              title: m.strMeal,
+              image: m.strMealThumb,
+            }));
+          })
+        );
+        resultsPerFilter.push(this.dedupeById(lists.flat()));
+      }
+
+      // --- Dish names (substring match) ---
+      if (dishNames.length > 0) {
+        const lists = await Promise.all(
+          dishNames.map(async (name) => {
+            const { data } = await axios.get(
+              `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(
+                name
+              )}`
+            );
+            return (data?.meals || []).map((m) => ({
+              id: m.idMeal,
+              title: m.strMeal,
+              image: m.strMealThumb,
+            }));
+          })
+        );
+        resultsPerFilter.push(this.dedupeById(lists.flat()));
+      }
+
+      let finalResults = [];
+
+      if (resultsPerFilter.length === 0) {
+        // Default: return all
+        const { data } = await axios.get(
+          "https://www.themealdb.com/api/json/v1/1/search.php?s="
+        );
+        finalResults = (data?.meals || []).map((m) => ({
+          id: m.idMeal,
+          title: m.strMeal,
+          image: m.strMealThumb,
+        }));
+      } else {
+        // Intersect results (AND semantics)
+        finalResults = this.intersectById(resultsPerFilter);
+      }
+
+      runInAction(() => {
+        this.recipes = finalResults;
+        this.loading = false;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
         this.loading = false;
       });
     }
