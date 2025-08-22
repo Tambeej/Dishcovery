@@ -22,6 +22,7 @@ class RecipeStore {
   randomRecipe = null;
   meals = [];
   names = [];
+  recipes = []
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
@@ -230,8 +231,8 @@ class RecipeStore {
       // --- Categories ---
       if (categories.length > 0) {
         const lists = await Promise.all(
-          ingredients.map(async (ing) => {
-            const { data } = await filterByCategory(ing);
+          categories.map(async (cat) => {
+            const { data } = await filterByCategory(cat);
             return (data?.meals || []).map((meal) => ({
               id: meal.idMeal,
               title: meal.strMeal,
@@ -254,12 +255,21 @@ class RecipeStore {
       // --- Countries / Areas ---
       if (countries.length > 0) {
         const lists = await Promise.all(
-          ingredients.map(async (ing) => {
-            const { data } = await filterByCountry(ing);
+          countries.map(async (area) => {
+            const { data } = await filterByCountry(area);
             return (data?.meals || []).map((m) => ({
-              id: m.idMeal,
-              title: m.strMeal,
-              image: m.strMealThumb,
+              id: meal.idMeal,
+              title: meal.strMeal,
+              image: meal.strMealThumb,
+              category: meal.strCategory,
+              area: meal.strArea,
+              tags: meal.strTags
+                ? meal.strTags.split(",").map((t) => t.trim())
+                : [],
+              instructions: meal.strInstructions,
+              youtube: meal.strYoutube,
+              source: meal.strSource,
+              ingredients,
             }));
           })
         );
@@ -270,15 +280,20 @@ class RecipeStore {
       if (dishNames.length > 0) {
         const lists = await Promise.all(
           dishNames.map(async (name) => {
-            const { data } = await axios.get(
-              `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(
-                name
-              )}`
-            );
+            const { data } = await filterByName(name);
             return (data?.meals || []).map((m) => ({
-              id: m.idMeal,
-              title: m.strMeal,
-              image: m.strMealThumb,
+              id: meal.idMeal,
+              title: meal.strMeal,
+              image: meal.strMealThumb,
+              category: meal.strCategory,
+              area: meal.strArea,
+              tags: meal.strTags
+                ? meal.strTags.split(",").map((t) => t.trim())
+                : [],
+              instructions: meal.strInstructions,
+              youtube: meal.strYoutube,
+              source: meal.strSource,
+              ingredients,
             }));
           })
         );

@@ -1,35 +1,96 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
+import {
+  getMyProfile,
+  getMyPreferences,
+  upsertPreferences,
+  listFavorites,
+  toggleFavorite,
+} from "../services/supabase";
+
 
 class UserStore {
-  user = null;
-  isLoggedIn = false;
-  allergies = [];
-  mealPreferences = "";
+  profile = null;
+  preferences = null;
   favorites = [];
+  loading = false;
+  error = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setUser(user) {
-    this.user = user;
+  /** Load everything for logged-in user */
+  async loadUserData() {
+    this.loading = true;
+    this.error = null;
+    try {
+      const [profile, preferences, favorites] = await Promise.all([
+        getMyProfile(),
+        getMyPreferences(),
+        listFavorites(),
+      ]);
+      runInAction(() => {
+        this.profile = profile;
+        this.preferences = preferences;
+        this.favorites = favorites;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
   }
-  async login(email, password) {}
 
-  async register(email, password) {}
+  /** Preferences */
+  async savePreferences(pref) {
+    try {
+      const updated = await upsertPreferences(pref);
+      runInAction(() => {
+        this.preferences = updated;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
+      });
+    }
+  }
 
-  async logout(){}
+  /** Favorites */
+  async toggleFavorite(recipe) {
+    try {
+      const res = await toggleFavorite(recipe);
+      runInAction(() => {
+        if (res.added) {
+          this.favorites.unshift({
+            recipe_id: String(recipe.id),
+            title: recipe.title,
+            image_url: recipe.image,
+          });
+        } else if (res.removed) {
+          this.favorites = this.favorites.filter(
+            (f) => f.recipe_id !== String(recipe.id)
+          );
+        }
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.message;
+      });
+    }
+  }
 
-  async loadPreferences(){}
-
-  async savePreferences(allergies, mealPreferences) {}
-
-  async loadFavorites() {}
-
-  async toggleFavorite(mealId) {}
-
+  isFavorite(recipeId) {
+    return this.favorites.some((f) => f.recipe_id === String(recipeId));
+  }
 }
 
-const userStore = new UserStore();
-export default userStore;
+export const userStore = new UserStore();
+
+
+
+
 
