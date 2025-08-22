@@ -35,7 +35,7 @@ function CountryInput({ disabled, onChange, recipeStore }) {
     setSelectedCountry(value);
 
     if (value.trim()) {
-      const filtered = recipeStore.countries.filter((ing) =>
+      const filtered = recipeStore.areas.filter((ing) =>
         ing.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5));

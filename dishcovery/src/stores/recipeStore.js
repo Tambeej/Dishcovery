@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import {
+  getAllCountries,
   getAllMeals,
   filterByCategory,
   dedupeById,
@@ -32,8 +33,8 @@ class RecipeStore {
       const data = await getAllMeals();
 
       runInAction(() => {
-        this.meals = data.meals || [];
-        this.names = this.meals.map((m) => m.strMeal);
+        this.meals = data || [];
+        this.names = this.meals.map((m) => m.title); 
       });
     } catch (err) {
       runInAction(() => {
@@ -156,7 +157,7 @@ class RecipeStore {
   // Get areas
   async fetchAreas() {
     this._withLoading(async () => {
-      const result = await getAreas();
+      const result = await getAllCountries();
       runInAction(() => {
         this.areas = result;
       });
