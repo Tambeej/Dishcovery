@@ -215,7 +215,6 @@ export async function filterByCountry(country) {
     image: m.strMealThumb,
   }));
 }
-
 /** Get all available countries/areas from TheMealDB */
 export async function getAllCountries() {
   const { data } = await axios.get(
@@ -247,7 +246,7 @@ async function expandIngredientTerm(term) {
 }
 
 /** Your existing helper (unchanged) */
-async function filterByIngredient(ingredient) {
+export async function filterByIngredient(ingredient) {
   if (!ingredient) return [];
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(
     ingredient
@@ -273,7 +272,7 @@ function intersectById(arrays) {
   return first.filter((r) => idCounts.get(r.id) === needed);
 }
 
-function dedupeById(list) {
+export function dedupeById(list) {
   const seen = new Set();
   const out = [];
   for (const r of list) {

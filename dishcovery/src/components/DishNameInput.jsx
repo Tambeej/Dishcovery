@@ -9,8 +9,8 @@ function DishNameInput({ disabled, onChange, recipeStore }) {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (!recipeStore.areas.length) {
-      recipeStore.fetchAreas();
+    if (!recipeStore.meals.length) {
+      recipeStore.getAllMealNames();
     }
   }, [recipeStore]);
 
@@ -35,7 +35,7 @@ function DishNameInput({ disabled, onChange, recipeStore }) {
     setSelectedName(value);
 
     if (value.trim()) {
-      const filtered = recipeStore.names.filter((ing) =>
+      const filtered = recipeStore.meals.filter((ing) =>
         ing.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5));
