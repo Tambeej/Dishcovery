@@ -7,7 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 import CountryInput from "./CountryInput";
 import DishNameInput from "./DishNameInput";
 
-function Search({recipeStore}) {
+function Search({ recipeStore }) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState("");
   const [country, setCountry] = useState("");
@@ -29,12 +29,12 @@ function Search({recipeStore}) {
       <div className="container text-center my-5 flex-wrap">
         <h2>Search Recipes</h2>
         <IngredientInput onChange={setIngredients} />
-      <CategoryInput onChange={setCategory} />
-        {/* <CountryInput onChange={setCountry} /> */}
-      <DishNameInput onChange={setDishName} />
+        <CategoryInput onChange={setCategory} />
+        <CountryInput onChange={setCountry} />
+        <DishNameInput onChange={setDishName} />
         <button onClick={handleSearch}> Find → </button>
         {recipeStore.loading && <LoadingSpinner />}
-      {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
+        {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
         {/* <div>
         {recipeStore.searchResults.map((recipe) => (
           <RecipeCard key={recipe.idMeal} recipe={recipe} />
