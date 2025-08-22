@@ -215,6 +215,13 @@ export async function filterByCountry(country) {
     image: m.strMealThumb,
   }));
 }
+/** Get all available countries/areas from TheMealDB */
+export async function getAllCountries() {
+  const { data } = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+  );
+  return (data?.meals || []).map((x) => x.strArea).filter(Boolean);
+}
 
 /** Cache all canonical ingredients once */
 let ALL_INGREDIENTS = null;
