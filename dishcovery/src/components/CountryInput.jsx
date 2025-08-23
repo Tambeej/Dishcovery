@@ -15,7 +15,7 @@ function CountryInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addCountry = () => {
-    if (selectedCountry && !countries.includes(selectedCountry)) {
+    if (selectedCountry && !countries.startsWith(selectedCountry)) {
       const updated = [...countries, selectedCountry];
       setCountries(updated);
       onChange(updated);
@@ -36,7 +36,7 @@ function CountryInput({ disabled, onChange, recipeStore }) {
 
     if (value.trim()) {
       const filtered = recipeStore.areas.filter((ing) =>
-        ing.toLowerCase().includes(value.toLowerCase())
+        ing.toLowerCase().startsWith(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5));
     } else {

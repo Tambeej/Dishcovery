@@ -15,7 +15,7 @@ function CategoryInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addCategory = () => {
-    if (selectedCategory && !categories.includes(selectedCategory)) {
+    if (selectedCategory && !categories.startsWith(selectedCategory)) {
       const updated = [...categories, selectedCategory];
       setCategories(updated);
       onChange(updated);
@@ -36,7 +36,7 @@ function CategoryInput({ disabled, onChange, recipeStore }) {
 
     if (value.trim()) {
       const filtered = recipeStore.categories.filter((ing) =>
-        ing.toLowerCase().includes(value.toLowerCase())
+        ing.toLowerCase().startsWith(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5));
     } else {
