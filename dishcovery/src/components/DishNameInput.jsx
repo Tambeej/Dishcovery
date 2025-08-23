@@ -15,7 +15,7 @@ function DishNameInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addName = () => {
-    if (selectedName && !names.startsWith(selectedName)) {
+    if (selectedName && !names.includes(selectedName)) {
       const updated = [...names, selectedName];
       setNames(updated);
       onChange(updated);
