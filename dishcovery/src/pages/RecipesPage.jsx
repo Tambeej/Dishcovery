@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { filterByCategory, searchRecipes, getCategories } from "../services/api";
 import Navbar from "../components/NavBar";
 import RecipeCard from "../components/RecipeCard";
-
+import ingredientStore from "../stores/ingredientStore";
 
 const RecipesPage = () => {
-  const { category } = useParams();   // e.g. "/vegan", "/american"
+  const { category, ingredient } = useParams();   // e.g. "/vegan", "/american", "/ingredient/chicken_breast"
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,12 @@ const RecipesPage = () => {
 
       let results = [];
       try {
+        // Check if route is /recipes/ingredient/:name
+        if (ingredient) {
+          await ingredientStore.fetchRecipesByIngredient(ingredient);
+          setMeals(ingredientStore.ingredientRecipes);
+          return;
+        }
         const allCategories = await getCategories(); // gives array of names
 
         // Handle "misc" (Preferences → everything except Vegan + Vegetarian)
@@ -70,7 +76,10 @@ const RecipesPage = () => {
         <div className="hero container-fluid">
           <Navbar />
           <div className="container hero-text text-center">
-            <h1>{category === "misc" ? "Miscellaneous Recipes" : category}</h1>
+            <h1>{
+              ingredient ? `Recipes with ${ingredient}`
+                : category === "misc" ? "Miscellaneous Recipes" : category
+            }</h1>
           </div>
         </div>
       </header>
@@ -79,7 +88,7 @@ const RecipesPage = () => {
       <div className="container mx-auto px-6 py-10">
         <div className="row">
           {meals.map((recipe) => (
-            <div key={recipe.id} className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"> {/* ✅ changed */}
+            <div key={recipe.id} className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"> 
               <RecipeCard recipe={recipe} />
             </div>
           ))}
