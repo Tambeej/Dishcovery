@@ -15,7 +15,7 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addIngredient = () => {
-    if (selectedIngredient && !ingredients.includes(selectedIngredient)) {
+    if (selectedIngredient && !ingredients.startsWith(selectedIngredient)) {
       const updated = [...ingredients, selectedIngredient];
       setIngredients(updated);
       onChange(updated);
@@ -36,7 +36,7 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
 
     if (value.trim()) {
       const filtered = recipeStore.ingredientList.filter((ing) =>
-        ing.toLowerCase().includes(value.toLowerCase())
+        ing.toLowerCase().startsWith(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5)); 
     } else {
