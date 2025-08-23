@@ -26,11 +26,14 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/recipe/:id" element={<Recipe />} />
               <Route path="/category/:category" element={<RecipesPage />} />
+
+              {/* <Route path="/ingredients/:name" element={<Ingredients />} />
+              <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} />
+               <Route path="/terms" element={<Terms />} /> */}
+
               {/* <Route path="/search" element={<RecipesPage />} />           */}
               {/* <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<Profile />} /> */}
-              {/* <Route path="/recipe/:id" element={<Recipe />} />
-              <Route path="/ingredients/:name" element={<Ingredients />} />
+              <Route path="/profile" element={<Profile />} />             
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} /> */}
