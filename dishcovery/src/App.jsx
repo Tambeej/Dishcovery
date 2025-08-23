@@ -5,8 +5,11 @@ import rootStore from "./stores/rootStore";
 // import Header from './components/Header';
 // import Footer from './components/Footer';
 import Home from "./pages/Home";
-// import Login from './pages/Login';
+import Login from "./pages/Login";
 import Search from "./components/Search";
+import Profile from "./pages/Profile";
+import { AuthProvider } from "./auth/AuthProvider";
+
 // import Ingredients from './pages/Ingredients';
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';
@@ -16,30 +19,32 @@ import RecipesPage from "./pages/RecipesPage";
 import "./App.css";
 function App() {
   return (
-    <Provider {...rootStore}>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          {/* <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} /> */}
-          {/* <Header /> */}
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/recipe/:id" element={<Recipe />} />
-              <Route path="/category/:category" element={<RecipesPage />} />
-              {/* <Route path="/search" element={<RecipesPage />} />           */}
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<Profile />} /> */}
-              {/* <Route path="/recipe/:id" element={<Recipe />} />
+    <AuthProvider>
+      <Provider {...rootStore}>
+        <Router>
+          <div className="min-h-screen flex flex-col">
+            {/* <TopBar isLoggedIn={rootStore.user.isLoggedIn} userName={rootStore.user.name} /> */}
+            {/* <Header /> */}
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/recipe/:id" element={<Recipe />} />
+                <Route path="/category/:category" element={<RecipesPage />} />
+                {/* <Route path="/search" element={<RecipesPage />} />*/}
+                <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
+                {/* <Route path="/recipe/:id" element={<Recipe />} />
               <Route path="/ingredients/:name" element={<Ingredients />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} /> */}
-            </Routes>
-          </main>
-          {/* <Footer /> */}
-        </div>
-      </Router>
-    </Provider>
+              </Routes>
+            </main>
+            {/* <Footer /> */}
+          </div>
+        </Router>
+      </Provider>
+    </AuthProvider>
   );
 }
 
