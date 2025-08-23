@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Search from "../components/Search";
 import Categories from "../components/Categories";
 // import LatestMeals from "../components/LatestMeals";
-// import Ingredients from "../components/Ingredients";
+import Ingredients from "../components/Ingredients";
 // import RandomMeals from "../components/RandomMeals";
 // import Blog from "../components/Blog";
 
@@ -14,7 +14,7 @@ const Home = () => (
     <Search />
     <Categories />
     {/* <LatestMeals /> */}
-    {/* <Ingredients /> */}
+    <Ingredients />
     {/* <RandomMeals /> */}
     {/* <Blog /> */}
   </div>

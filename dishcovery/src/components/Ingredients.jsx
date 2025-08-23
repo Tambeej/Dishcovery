@@ -17,7 +17,7 @@ const Ingredients = observer(() => {
       <div className="row justify-content-center">
         {ingredientStore.randomIngredients.map((ing, i) => (
           <div key={i} className="col-6 col-md-2 mb-4">
-            <Link to={`/ingredient/${ing}`}>
+            <Link to={`/ingredients/${ing}`}>
               <div className="card shadow-sm p-3">
                 <img
                   src={`https://www.themealdb.com/images/ingredients/${ing}.png`}
