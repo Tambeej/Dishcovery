@@ -15,7 +15,7 @@ function DishNameInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addName = () => {
-    if (selectedName && !names.includes(selectedName)) {
+    if (selectedName && !names.startsWith(selectedName)) {
       const updated = [...names, selectedName];
       setNames(updated);
       onChange(updated);
@@ -37,7 +37,7 @@ function DishNameInput({ disabled, onChange, recipeStore }) {
     if (value.trim()) {
       const filtered = recipeStore.meals
         .filter((meal) =>
-          meal.title.toLowerCase().includes(value.toLowerCase())
+          meal.title.toLowerCase().startsWith(value.toLowerCase())
         )
         .map((meal) => meal.title);
       setSuggestions(filtered.slice(0, 5));

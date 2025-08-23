@@ -38,16 +38,12 @@ function Search({ recipeStore }) {
         </div>
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
-        {/* <div>
-          {recipeStore.recipes.map((recipe) => (
-            <RecipeCard key={recipe.idMeal} recipe={recipe} />
-          ))}
-        </div> */}
+
         <div className="row">
           {recipeStore.recipes.map((recipe) => (
             <div
               key={recipe.idMeal}
-              className="col-12 col-md-6 col-lg-3 mb-4 d-flex"
+              className="d-flex flex-wrap justify-content-centercol-12 col-md-3 mb-4"
             >
               <RecipeCard recipe={recipe} />
             </div>
