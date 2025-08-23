@@ -4,7 +4,7 @@
 import { Link } from "react-router-dom";
 
 function TopBar({ isLoggedIn = false, userName = "" }) {
-  // Helper to render icon + text
+ 
   const NavIconLink = ({ to, icon, label, className = "" }) => (
     <Link to={to} className={`d-flex align-items-center text-decoration-none text-dark me-3 ${className}`}>
       <img src={`/img/svg/${icon}`} alt={label} width="16" height="16" className="me-1" />
