@@ -15,7 +15,7 @@ function CategoryInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addCategory = () => {
-    if (selectedCategory && !categories.startsWith(selectedCategory)) {
+    if (selectedCategory && !categories.includes(selectedCategory)) {
       const updated = [...categories, selectedCategory];
       setCategories(updated);
       onChange(updated);

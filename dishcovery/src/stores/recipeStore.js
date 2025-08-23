@@ -269,7 +269,7 @@ class RecipeStore {
       }
 
       runInAction(() => {
-        this.recipes = finalResults.slice(0, 10);
+        this.recipes = finalResults.slice(0, 9);
         this.loading = false;
       });
       console.log(finalResults);

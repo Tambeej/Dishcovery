@@ -15,7 +15,7 @@ function CountryInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addCountry = () => {
-    if (selectedCountry && !countries.startsWith(selectedCountry)) {
+    if (selectedCountry && !countries.includes(selectedCountry)) {
       const updated = [...countries, selectedCountry];
       setCountries(updated);
       onChange(updated);

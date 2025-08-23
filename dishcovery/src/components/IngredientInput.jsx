@@ -15,7 +15,7 @@ function IngredientInput({ disabled, onChange, recipeStore }) {
   }, [recipeStore]);
 
   const addIngredient = () => {
-    if (selectedIngredient && !ingredients.startsWith(selectedIngredient)) {
+    if (selectedIngredient && !ingredients.includes(selectedIngredient)) {
       const updated = [...ingredients, selectedIngredient];
       setIngredients(updated);
       onChange(updated);
