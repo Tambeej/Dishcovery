@@ -1,14 +1,16 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import {
+  filterByCountry,
   getAllCountries,
   getAllMeals,
   filterByCategory,
-  dedupeById,
   filterByIngredient,
   getCategories,
   searchRecipes,
   getRecipeById,
   getAllIngredients,
+  dedupeById,
+  intersectById,
 } from "../services/api";
 
 class RecipeStore {
@@ -22,10 +24,18 @@ class RecipeStore {
   randomRecipe = null;
   meals = [];
   names = [];
-  recipes = []
+  recipes = [];
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  filterDishByName(name) {
+    if (!name || !this.meals) return null;
+
+    return this.meals.find(
+      (meal) => meal.title.toLowerCase() === name.toLowerCase()
+    );
   }
 
   async getAllMealNames() {
@@ -35,7 +45,7 @@ class RecipeStore {
 
       runInAction(() => {
         this.meals = data || [];
-        this.names = this.meals.map((m) => m.title); 
+        this.names = this.meals.map((m) => m.title);
       });
     } catch (err) {
       runInAction(() => {
@@ -48,28 +58,28 @@ class RecipeStore {
     }
   }
 
-  //Search recipes
-  async fetchRecipes(params) {
-    runInAction(() => {
-      this.loading = true;
-      this.error = null;
-    });
+  // //Search recipes
+  // async fetchRecipes(params) {
+  //   runInAction(() => {
+  //     this.loading = true;
+  //     this.error = null;
+  //   });
 
-    try {
-      const results = await searchRecipes(params);
-      runInAction(() => {
-        this.searchResults = results;
-      });
-    } catch (err) {
-      runInAction(() => {
-        this.error = err.message;
-      });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  }
+  //   try {
+  //     const results = await searchRecipes(params);
+  //     runInAction(() => {
+  //       this.searchResults = results;
+  //     });
+  //   } catch (err) {
+  //     runInAction(() => {
+  //       this.error = err.message;
+  //     });
+  //   } finally {
+  //     runInAction(() => {
+  //       this.loading = false;
+  //     });
+  //   }
+  // }
   //Get recipe details
   async fetchRecipeDetails(id) {
     runInAction(() => {
@@ -208,21 +218,8 @@ class RecipeStore {
       if (ingredients.length > 0) {
         const lists = await Promise.all(
           ingredients.map(async (ing) => {
-            const { data } = await filterByIngredient(ing);
-            return (data?.meals || []).map((meal) => ({
-              id: meal.idMeal,
-              title: meal.strMeal,
-              image: meal.strMealThumb,
-              category: meal.strCategory,
-              area: meal.strArea,
-              tags: meal.strTags
-                ? meal.strTags.split(",").map((t) => t.trim())
-                : [],
-              instructions: meal.strInstructions,
-              youtube: meal.strYoutube,
-              source: meal.strSource,
-              ingredients,
-            }));
+            const meals = await filterByIngredient(ing);
+            return meals;
           })
         );
         resultsPerFilter.push(dedupeById(lists.flat()));
@@ -232,21 +229,8 @@ class RecipeStore {
       if (categories.length > 0) {
         const lists = await Promise.all(
           categories.map(async (cat) => {
-            const { data } = await filterByCategory(cat);
-            return (data?.meals || []).map((meal) => ({
-              id: meal.idMeal,
-              title: meal.strMeal,
-              image: meal.strMealThumb,
-              category: meal.strCategory,
-              area: meal.strArea,
-              tags: meal.strTags
-                ? meal.strTags.split(",").map((t) => t.trim())
-                : [],
-              instructions: meal.strInstructions,
-              youtube: meal.strYoutube,
-              source: meal.strSource,
-              ingredients,
-            }));
+            const meals = await filterByCategory(cat);
+            return meals;
           })
         );
         resultsPerFilter.push(dedupeById(lists.flat()));
@@ -256,71 +240,39 @@ class RecipeStore {
       if (countries.length > 0) {
         const lists = await Promise.all(
           countries.map(async (area) => {
-            const { data } = await filterByCountry(area);
-            return (data?.meals || []).map((m) => ({
-              id: meal.idMeal,
-              title: meal.strMeal,
-              image: meal.strMealThumb,
-              category: meal.strCategory,
-              area: meal.strArea,
-              tags: meal.strTags
-                ? meal.strTags.split(",").map((t) => t.trim())
-                : [],
-              instructions: meal.strInstructions,
-              youtube: meal.strYoutube,
-              source: meal.strSource,
-              ingredients,
-            }));
+            const meals = await filterByCountry(area);
+            return meals;
           })
         );
-        resultsPerFilter.push(this.dedupeById(lists.flat()));
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
       // --- Dish names (substring match) ---
       if (dishNames.length > 0) {
         const lists = await Promise.all(
           dishNames.map(async (name) => {
-            const { data } = await filterByName(name);
-            return (data?.meals || []).map((m) => ({
-              id: meal.idMeal,
-              title: meal.strMeal,
-              image: meal.strMealThumb,
-              category: meal.strCategory,
-              area: meal.strArea,
-              tags: meal.strTags
-                ? meal.strTags.split(",").map((t) => t.trim())
-                : [],
-              instructions: meal.strInstructions,
-              youtube: meal.strYoutube,
-              source: meal.strSource,
-              ingredients,
-            }));
+            const meals = await this.filterDishByName(name);
+            return meals;
           })
         );
-        resultsPerFilter.push(this.dedupeById(lists.flat()));
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
       let finalResults = [];
 
       if (resultsPerFilter.length === 0) {
-        // Default: return all
-        const { data } = await axios.get(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
-        );
-        finalResults = (data?.meals || []).map((m) => ({
-          id: m.idMeal,
-          title: m.strMeal,
-          image: m.strMealThumb,
-        }));
+        const meals = await getAllMeals();
+        finalResults = meals;
       } else {
-        // Intersect results (AND semantics)
-        finalResults = this.intersectById(resultsPerFilter);
+        finalResults = intersectById(resultsPerFilter);
+        console.log(finalResults);
       }
 
       runInAction(() => {
-        this.recipes = finalResults;
+        this.recipes = finalResults.slice(0, 10);
         this.loading = false;
       });
+      console.log(finalResults);
     } catch (err) {
       runInAction(() => {
         this.error = err.message;

@@ -259,7 +259,7 @@ export async function filterByIngredient(ingredient) {
   }));
 }
 
-function intersectById(arrays) {
+export function intersectById(arrays) {
   if (!arrays.length) return [];
   const idCounts = new Map();
   for (const arr of arrays) {
