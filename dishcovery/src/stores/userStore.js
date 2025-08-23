@@ -5,7 +5,7 @@ import {
   upsertPreferences,
   listFavorites,
   toggleFavorite,
-} from "../services/supabase";
+} from "../services/db";
 
 
 class UserStore {
@@ -88,7 +88,7 @@ class UserStore {
   }
 }
 
-export const userStore = new UserStore();
+export default new UserStore();
 
 
 

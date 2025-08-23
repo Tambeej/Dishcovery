@@ -18,8 +18,8 @@ function Search({ recipeStore }) {
       category: category.join(","),
       country: country.join(","),
       dishName: dishName.join(","),
-      diet: diet || userStore.mealPreferences,
-      allergies: userStore.allergies,
+      // diet: diet || userStore.mealPreferences,
+      // allergies: userStore.allergies,
     };
     await recipeStore.fetchRecipes(params);
   };
