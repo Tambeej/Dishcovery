@@ -20,7 +20,7 @@ const LatestMeals = () => {
   }, []);
 
   return (
-    <div id="random-meals" className="random-meals container-fluid py-5 bg-light">
+    <div id="latest-meals" className="random-meals container-fluid py-5 bg-light">
       <div className="container text-center">
         <h2>
           Latest Recipes
