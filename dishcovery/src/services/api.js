@@ -724,3 +724,52 @@ export async function getRecipeById(id) {
     return null;
   }
 }
+
+export async function getRandomMeals(count = 5) {
+  try {
+    const results = [];
+    for (let i = 0; i < count; i++) {
+      const { data } = await api.get("/random.php");
+      const meal = data?.meals?.[0];
+      if (meal) {
+        results.push({
+          id: meal.idMeal,
+          title: meal.strMeal,
+          image: meal.strMealThumb,
+          instructions: meal.strInstructions,
+        });
+      }
+    }
+    return results;
+  } catch (err) {
+    logApiError("getRandomMeals", err);
+    return [];
+  }
+}
+
+export async function getLatestRecipes(count = 5) {
+  try {
+    // 1) get all meals (just id + title + image)
+    const all = await getAllMeals();
+
+    // 2) sort by numeric ID (biggest = newest)
+    const sorted = [...all].sort(
+      (a, b) => Number(b.id) - Number(a.id)
+    );
+
+    // 3) take top N
+    const latest = sorted.slice(0, count);
+
+    // 4) hydrate with full details via lookup
+    const details = await Promise.all(
+      latest.map((m) => getRecipeById(m.id))
+    );
+
+    // 5) filter out any nulls and return
+    return details.filter(Boolean);
+  } catch (err) {
+    logApiError("getLatestRecipes", err);
+    return [];
+  }
+}
+

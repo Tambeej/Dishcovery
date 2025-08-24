@@ -13,7 +13,8 @@
   font-style: normal;
 }
 h2 {
-  color: #00c16d !important;
+  color: #00c16d;
+  margin-bottom: 3rem;
 }
 button {
   background-color: #00c16d;
