@@ -20,7 +20,7 @@
   border: solid 1px #00C16D;
 }
 .btn-main:hover, .btn-success:hover{
-  background-color: #fff;
+  background-color: transparent;
   color:#00C16D;
 border: solid 1px #00C16D;
 }

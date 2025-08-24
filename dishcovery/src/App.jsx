@@ -7,12 +7,9 @@ import Footer from './components/Footer';
 import Home from "./pages/Home";
 import TopBar from "./components/TopBar";
 import Login from "./pages/Login";
-import Search from "./components/Search";
+// import Search from "./components/Search";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./auth/AuthProvider";
-// import Ingredients from './pages/Ingredients';
-
-
 import IngredientPage from './pages/IngredientPage';
 
 // import Favorites from './pages/Favorites';
@@ -50,10 +47,12 @@ function App() {
                 {/* <Route path="/search" element={<RecipesPage />} />           */}
                 {<Route path="/login" element={<Login />} />}
                 <Route path="/profile" element={<Profile />} />
-                {/*<Route path="/favorites" element={<Favorites />} />
-
+                
+                {/* Extensions
+                <Route path="/favorites" element={<Favorites />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/contact" element={<Contact />} /> */}
+
               </Routes>
             </main>
             <Footer />
