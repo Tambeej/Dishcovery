@@ -22,22 +22,28 @@ function Footer() {
             </Link>
           </li>
           <li className="mx-3">
-            <Link className="text-light text-decoration-none" to="/categories">
-              Categories
-            </Link>
+            <button
+                                className="nav-link text-light"
+                                onClick={() => {
+                                    const element = document.getElementById("categories");
+                                    element?.scrollIntoView({ behavior: "smooth" });
+                                }}
+                            >
+                                Categories
+                            </button>
           </li>
           <li className="mx-3">
-            <Link className="text-light text-decoration-none" to="/favorites">
+            <Link className="text-light text-decoration-none" to="/comingsoon">
               Favorite Meals
             </Link>
           </li>
           <li className="mx-3">
-            <Link className="text-light text-decoration-none" to="/blog">
+            <Link className="text-light text-decoration-none" to="/comingsoon">
               Blog
             </Link>
           </li>
           <li className="mx-3">
-            <Link className="text-light text-decoration-none" to="/contact">
+            <Link className="text-light text-decoration-none" to="/comingsoon">
               Contacts
             </Link>
           </li>
