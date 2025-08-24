@@ -219,249 +219,211 @@ class RecipeStore {
   //   this.error = null;
 
   //   try {
+  //     // Start with all meals
+  //     let allMeals = await getAllMeals();
+
+  //     // Fetch full recipe details for diet and allergen filtering
+  //     const detailedMeals = await Promise.all(
+  //       allMeals.map(async (meal) => {
+  //         const recipe = await this.getRecipeDetails(meal.id);
+  //         return recipe;
+  //       })
+  //     ).then((results) => results.filter((meal) => meal !== null));
+
+  //     // Apply diet filtering if provided
+  //     if (diet) {
+  //       allMeals = detailedMeals
+  //         .filter((recipe) => {
+  //           if (diet === "vegetarian")
+  //             return recipe.strCategory.toLowerCase() === "vegetarian";
+  //           if (diet === "vegan")
+  //             return recipe.strCategory.toLowerCase() === "vegan";
+  //           if (diet === "meat")
+  //             return ["beef", "chicken", "pork", "lamb"].includes(
+  //               recipe.strCategory.toLowerCase()
+  //             );
+  //           return false; // Exclude if diet doesn't match
+  //         })
+  //         .map((meal) => ({
+  //           id: meal.idMeal,
+  //           title: meal.strMeal,
+  //           image: meal.strMealThumb,
+  //         }));
+  //     }
+
+  //     // Apply allergen filtering if provided
+  //     if (allergies.length) {
+  //       const allergenMap = getAllergenMap();
+  //       allMeals = detailedMeals
+  //         .filter((recipe) => {
+  //           const recipeIngredients = Object.keys(recipe)
+  //             .filter((key) => key.startsWith("strIngredient") && recipe[key])
+  //             .map((key) => recipe[key].toLowerCase());
+  //           return !allergies.some((allergen) => {
+  //             const allergenIngredients =
+  //               allergenMap[allergen.toLowerCase()] || [];
+  //             return allergenIngredients.some((ing) =>
+  //               recipeIngredients.includes(ing)
+  //             );
+  //           });
+  //         })
+  //         .map((meal) => ({
+  //           id: meal.idMeal,
+  //           title: meal.strMeal,
+  //           image: meal.strMealThumb,
+  //         }));
+  //     }
+
   //     const resultsPerFilter = [];
 
+  //     // Filter by ingredients
   //     if (ingredients.length > 0) {
   //       const lists = await Promise.all(
   //         ingredients.map(async (ing) => {
   //           const meals = await filterByIngredient(ing);
-  //           return meals;
+  //           return meals.filter((meal) =>
+  //             allMeals.some((m) => m.id === meal.id)
+  //           );
   //         })
   //       );
-  //       resultsPerFilter.push(dedupeById(lists.flat()));
+  //       const validList = dedupeById(lists.flat());
+  //       if (validList.length > 0) resultsPerFilter.push(validList);
   //     }
 
-  //     // --- Categories ---
+  //     // Filter by categories
   //     if (categories.length > 0) {
   //       const lists = await Promise.all(
   //         categories.map(async (cat) => {
   //           const meals = await filterByCategory(cat);
-  //           return meals;
+  //           return meals.filter((meal) =>
+  //             allMeals.some((m) => m.id === meal.id)
+  //           );
   //         })
   //       );
-  //       resultsPerFilter.push(dedupeById(lists.flat()));
+  //       const validList = dedupeById(lists.flat());
+  //       if (validList.length > 0) resultsPerFilter.push(validList);
   //     }
 
-  //     // --- Countries / Areas ---
+  //     // Filter by countries
   //     if (countries.length > 0) {
   //       const lists = await Promise.all(
   //         countries.map(async (area) => {
   //           const meals = await filterByCountry(area);
-  //           return meals;
+  //           return meals.filter((meal) =>
+  //             allMeals.some((m) => m.id === meal.id)
+  //           );
   //         })
   //       );
-  //       resultsPerFilter.push(dedupeById(lists.flat()));
+  //       const validList = dedupeById(lists.flat());
+  //       if (validList.length > 0) resultsPerFilter.push(validList);
   //     }
 
-  //     // --- Dish names (substring match) ---
+  //     // Filter by dish names
   //     if (dishNames.length > 0) {
-  //       const lists = await Promise.all(
-  //         dishNames.map(async (name) => {
-  //           const meals = await this.filterDishByName(name);
-  //           return meals;
-  //         })
-  //       );
-  //       resultsPerFilter.push(dedupeById(lists.flat()));
+  //       const lists = dishNames
+  //         .map((name) => this.filterDishByName(name))
+  //         .filter((meal) => meal && allMeals.some((m) => m.id === meal.id));
+  //       const validList = dedupeById(lists);
+  //       if (validList.length > 0) resultsPerFilter.push(validList);
   //     }
 
   //     let finalResults = [];
 
   //     if (resultsPerFilter.length === 0) {
-  //       const meals = await getAllMeals();
-  //       finalResults = meals;
+  //       finalResults = allMeals; // Use diet/allergen-filtered meals if no other filters
   //     } else {
   //       finalResults = intersectById(resultsPerFilter);
   //     }
 
-  //       // Fetch full recipe details for diet and allergen filtering
-  //     const detailedRecipes = await getAllMeals();
-
-  //     // Apply diet filtering if provided
-  //     if (diet) {
-  //       finalResults = detailedRecipes.filter(recipe => {
-  //         if (diet === 'vegetarian') return recipe.strCategory.toLowerCase() === 'vegetarian';
-  //         if (diet === 'vegan') return recipe.strCategory.toLowerCase() === 'vegan';
-  //         if (diet === 'meat') return ['beef', 'chicken', 'pork', 'lamb'].includes(recipe.strCategory.toLowerCase());
-  //         return true;
-  //       }).map(meal => ({
-  //         id: meal.idMeal,
-  //         title: meal.strMeal,
-  //         image: meal.strMealThumb,
-  //       }));
-  //     } else {
-  //       // If no diet specified, use all detailed recipes
-  //       finalResults = detailedRecipes.map(meal => ({
-  //         id: meal.idMeal,
-  //         title: meal.strMeal,
-  //         image: meal.strMealThumb,
-  //       }));
-  //     }
-
-  //     // Apply allergen filtering if allergies provided
-  //     if (allergies.length) {
-  //       const allergenMap = getAllergenMap();
-  //       finalResults = finalResults.filter(meal => {
-  //         const detailedRecipe = detailedRecipes.find(r => r.idMeal === meal.id);
-  //         const recipeIngredients = Object.keys(detailedRecipe)
-  //           .filter(key => key.startsWith('strIngredient') && detailedRecipe[key])
-  //           .map(key => detailedRecipe[key].toLowerCase());
-  //         return !allergies.some(allergen => {
-  //           const allergenIngredients = allergenMap[allergen.toLowerCase()] || [];
-  //           return allergenIngredients.some(ing => recipeIngredients.includes(ing));
-  //         });
-  //       });
-  //     }
-
   //     runInAction(() => {
   //       this.recipes = finalResults.slice(0, 9);
-  //       this.loading = false;
   //     });
-  //     console.log(finalResults);
   //   } catch (err) {
   //     runInAction(() => {
-  //       this.error = err.message;
+  //       this.error = err.message || "Failed to fetch recipes";
+  //     });
+  //   } finally {
+  //     runInAction(() => {
   //       this.loading = false;
   //     });
   //   }
   // }
 
+
+  
   async fetchRecipes({
     ingredients = [],
     categories = [],
     countries = [],
     dishNames = [],
-    diet = "",
-    allergies = [],
   }) {
     this.loading = true;
     this.error = null;
 
     try {
-      // Start with all meals
-      let allMeals = await getAllMeals();
-
-      // Fetch full recipe details for diet and allergen filtering
-      const detailedMeals = await Promise.all(
-        allMeals.map(async (meal) => {
-          const recipe = await this.getRecipeDetails(meal.id);
-          return recipe;
-        })
-      ).then((results) => results.filter((meal) => meal !== null));
-
-      // Apply diet filtering if provided
-      if (diet) {
-        allMeals = detailedMeals
-          .filter((recipe) => {
-            if (diet === "vegetarian")
-              return recipe.strCategory.toLowerCase() === "vegetarian";
-            if (diet === "vegan")
-              return recipe.strCategory.toLowerCase() === "vegan";
-            if (diet === "meat")
-              return ["beef", "chicken", "pork", "lamb"].includes(
-                recipe.strCategory.toLowerCase()
-              );
-            return false; // Exclude if diet doesn't match
-          })
-          .map((meal) => ({
-            id: meal.idMeal,
-            title: meal.strMeal,
-            image: meal.strMealThumb,
-          }));
-      }
-
-      // Apply allergen filtering if provided
-      if (allergies.length) {
-        const allergenMap = getAllergenMap();
-        allMeals = detailedMeals
-          .filter((recipe) => {
-            const recipeIngredients = Object.keys(recipe)
-              .filter((key) => key.startsWith("strIngredient") && recipe[key])
-              .map((key) => recipe[key].toLowerCase());
-            return !allergies.some((allergen) => {
-              const allergenIngredients =
-                allergenMap[allergen.toLowerCase()] || [];
-              return allergenIngredients.some((ing) =>
-                recipeIngredients.includes(ing)
-              );
-            });
-          })
-          .map((meal) => ({
-            id: meal.idMeal,
-            title: meal.strMeal,
-            image: meal.strMealThumb,
-          }));
-      }
-
       const resultsPerFilter = [];
 
-      // Filter by ingredients
       if (ingredients.length > 0) {
         const lists = await Promise.all(
           ingredients.map(async (ing) => {
             const meals = await filterByIngredient(ing);
-            return meals.filter((meal) =>
-              allMeals.some((m) => m.id === meal.id)
-            );
+            return meals;
           })
         );
-        const validList = dedupeById(lists.flat());
-        if (validList.length > 0) resultsPerFilter.push(validList);
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
-      // Filter by categories
+      // --- Categories ---
       if (categories.length > 0) {
         const lists = await Promise.all(
           categories.map(async (cat) => {
             const meals = await filterByCategory(cat);
-            return meals.filter((meal) =>
-              allMeals.some((m) => m.id === meal.id)
-            );
+            return meals;
           })
         );
-        const validList = dedupeById(lists.flat());
-        if (validList.length > 0) resultsPerFilter.push(validList);
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
-      // Filter by countries
+      // --- Countries / Areas ---
       if (countries.length > 0) {
         const lists = await Promise.all(
           countries.map(async (area) => {
             const meals = await filterByCountry(area);
-            return meals.filter((meal) =>
-              allMeals.some((m) => m.id === meal.id)
-            );
+            return meals;
           })
         );
-        const validList = dedupeById(lists.flat());
-        if (validList.length > 0) resultsPerFilter.push(validList);
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
-      // Filter by dish names
+      // --- Dish names (substring match) ---
       if (dishNames.length > 0) {
-        const lists = dishNames
-          .map((name) => this.filterDishByName(name))
-          .filter((meal) => meal && allMeals.some((m) => m.id === meal.id));
-        const validList = dedupeById(lists);
-        if (validList.length > 0) resultsPerFilter.push(validList);
+        const lists = await Promise.all(
+          dishNames.map(async (name) => {
+            const meals = await this.filterDishByName(name);
+            return meals;
+          })
+        );
+        resultsPerFilter.push(dedupeById(lists.flat()));
       }
 
       let finalResults = [];
 
       if (resultsPerFilter.length === 0) {
-        finalResults = allMeals; // Use diet/allergen-filtered meals if no other filters
+        const meals = await getAllMeals();
+        finalResults = meals;
       } else {
         finalResults = intersectById(resultsPerFilter);
+        console.log(finalResults);
       }
 
       runInAction(() => {
         this.recipes = finalResults.slice(0, 9);
+        this.loading = false;
       });
+      console.log(finalResults);
     } catch (err) {
       runInAction(() => {
-        this.error = err.message || "Failed to fetch recipes";
-      });
-    } finally {
-      runInAction(() => {
+        this.error = err.message;
         this.loading = false;
       });
     }
