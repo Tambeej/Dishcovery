@@ -21,7 +21,7 @@ export default function Login() {
     try {
       if (mode === "login") {
         await signIn(email, password);
-        navigate("/home", { replace: true });
+        navigate("/", { replace: true });
       } else {
         await signUp(email, password);
         navigate(from, { replace: true });
