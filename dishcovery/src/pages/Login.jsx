@@ -21,10 +21,11 @@ export default function Login() {
     try {
       if (mode === "login") {
         await signIn(email, password);
+        navigate("/home", { replace: true });
       } else {
         await signUp(email, password);
+        navigate(from, { replace: true });
       }
-      navigate(from, { replace: true });
     } catch (err) {
       setError(err?.message || "Something went wrong");
     } finally {
