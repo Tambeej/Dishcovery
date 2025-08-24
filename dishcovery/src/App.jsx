@@ -5,11 +5,16 @@ import rootStore from "./stores/rootStore";
 // import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from "./pages/Home";
+import TopBar from "./components/TopBar";
 import Login from "./pages/Login";
 import Search from "./components/Search";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./auth/AuthProvider";
 // import Ingredients from './pages/Ingredients';
+
+
+import IngredientPage from './pages/IngredientPage';
+
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
@@ -47,6 +52,7 @@ function App() {
                 {<Route path="/login" element={<Login />} />}
                 <Route path="/profile" element={<Profile />} />
                 {/*<Route path="/favorites" element={<Favorites />} />
+
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/contact" element={<Contact />} /> */}
               </Routes>

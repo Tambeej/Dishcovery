@@ -11,6 +11,7 @@ import {
   getAllIngredients,
   dedupeById,
   intersectById,
+  getRandomMeals,
 } from "../services/api";
 
 class RecipeStore {
@@ -25,6 +26,7 @@ class RecipeStore {
   meals = [];
   names = [];
   recipes = [];
+  randomMeals = [];
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
@@ -203,6 +205,7 @@ class RecipeStore {
       });
     }
   }
+
   async fetchRecipes({
     ingredients = [],
     categories = [],
@@ -279,6 +282,15 @@ class RecipeStore {
         this.loading = false;
       });
     }
+  }
+  
+  async fetchRandomMeals(count = 5) {
+    this._withLoading(async () => {
+      const result = await getRandomMeals(count);
+      runInAction(() => {
+        this.randomMeals = result;
+      });
+    });
   }
 }
 

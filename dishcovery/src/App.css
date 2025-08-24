@@ -14,7 +14,16 @@
   text-align: center;
   flex-direction: column;
 }
-
+.btn-main, .btn-success{
+  background-color: #00C16D;
+  color: white;
+  border: solid 1px #00C16D;
+}
+.btn-main:hover, .btn-success:hover{
+  background-color: #fff;
+  color:#00C16D;
+border: solid 1px #00C16D;
+}
 
 @media (prefers-reduced-motion: no-preference) {
 }
