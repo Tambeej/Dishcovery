@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -39,8 +39,24 @@ const dishes = [
   },
 ];
 
-const Dishes = () => (
-  
+const Dishes = () => {
+    useEffect(() => {
+    function equalizeHeights() {
+      const cards = document.querySelectorAll(".category-card .card-body");
+      let maxHeight = 0;
+      cards.forEach((c) => {
+        c.style.height = "auto"; // reset
+        maxHeight = Math.max(maxHeight, c.offsetHeight);
+      });
+      cards.forEach((c) => (c.style.height = maxHeight + "px"));
+    }
+
+    equalizeHeights();
+    window.addEventListener("resize", equalizeHeights);
+    return () => window.removeEventListener("resize", equalizeHeights);
+  }, []);
+
+  return (
     <Swiper
       modules={[Pagination]}
       spaceBetween={20}
@@ -53,18 +69,18 @@ const Dishes = () => (
       }}
     >
       {dishes.map((data, index) => (
-      <SwiperSlide key={index} className="col-md-4 col-lg-3">    
-        <div className="card h-100 shadow-sm border-0 category-card d-flex flex-column">
+      <SwiperSlide key={index} >    
+       <div className="card h-100 shadow-sm border-0 category-card d-flex flex-column">
           <img
             src={data.img}
             alt={data.title}
             className="card-img"
            
           />
-          <div className="card-body">
+          <div className="card-body d-flex flex-column">
             <h5 className="card-title">{data.title}</h5>
-            <p className="card-text">{data.desc}</p>
-            <Link to={`/category/${data.category.toLowerCase()}`} className="fw-bold">
+            <p className="card-text flex-grow-1">{data.desc}</p>
+            <Link to={`/category/${data.category.toLowerCase()}`} className="fw-bold mt-auto">
               Learn More
             </Link>
           </div>
@@ -74,5 +90,5 @@ const Dishes = () => (
   </Swiper>
  
 );
-
+};
 export default Dishes;

@@ -7,7 +7,7 @@ import "./TopBar.css";
 function TopBar({ isLoggedIn = false, userName = "" }) {
 
   const NavIconLink = ({ to, icon, label, className = "" }) => (
-    <Link to={to} className={`d-flex align-items-center text-decoration-none text-light me-3 ${className}`}>
+    <Link to={to} className={`d-flex align-items-center text-decoration-none text-light ${className}`}>
       <img src={`/img/svg/${icon}`} alt={label} width="16" height="16" className="me-2" />
       {label}
     </Link>
