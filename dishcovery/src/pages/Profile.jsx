@@ -199,6 +199,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { observer } from "mobx-react"; // or "mobx-react-lite"
 import user from "../stores/userStore";
+import { useNavigate } from "react-router-dom";
 
 const ALL_INTOLERANCES = [
   "gluten",
@@ -213,6 +214,14 @@ const ALL_INTOLERANCES = [
 ];
 
 function Profile() {
+  const navigate = useNavigate();
+  const signOutAndGoHome = async () => {
+    try {
+      await user.signOut?.();
+    } finally {
+      navigate("/", { replace: true });
+    }
+  };
   const [prefs, setPrefs] = useState(user.preferences);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
@@ -253,7 +262,7 @@ function Profile() {
         <h1>Profile & Preferences</h1>
         <div>
           {user.isLoggedIn ? (
-            <button onClick={() => user.signOut?.()}>Sign out</button>
+            <button onClick={signOutAndGoHome}>Sign out</button>
           ) : (
             <span style={{ color: "#666" }}>You are browsing as Guest</span>
           )}
