@@ -7,14 +7,12 @@ import Footer from './components/Footer';
 import Home from "./pages/Home";
 import TopBar from "./components/TopBar";
 import Login from "./pages/Login";
-import Search from "./components/Search";
+// import Search from "./components/Search";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./auth/AuthProvider";
 // import Ingredients from './pages/Ingredients';
-
-
-import IngredientPage from './pages/IngredientPage';
-
+import IngredientPage from "./pages/IngredientPage";
+import ProtectedRoute from "./auth/protectedRoute";
 // import Favorites from './pages/Favorites';
 // import Blog from './pages/Blog';
 // import Contact from './pages/Contact';
@@ -23,19 +21,16 @@ import RecipesPage from "./pages/RecipesPage";
 import Terms from "./pages/Terms";
 import "./App.css";
 import AuthBridge from "./boot/AuthBridge";
+import user from "./stores/userStore";
+
 function App() {
   return (
     <AuthProvider>
       <Provider {...rootStore}>
         <Router>
           <AuthBridge />
-          <div className="min-h-screen flex flex-col d-flex flex-column min-vh-100">
-            {
-              <TopBar
-                isLoggedIn={rootStore.userStore.isLoggedIn}
-                userName={rootStore.userStore.name}
-              />
-            }
+          <div className="min-h-screen flex flex-col">
+            <TopBar />
             {/* <Header /> */}
             <main className="flex-grow-1">
               <Routes>
@@ -49,11 +44,18 @@ function App() {
 
                 {/* <Route path="/search" element={<RecipesPage />} />           */}
                 {<Route path="/login" element={<Login />} />}
-                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
                 {/*<Route path="/favorites" element={<Favorites />} />
-
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/contact" element={<Contact />} /> */}
+
               </Routes>
             </main>
             <Footer />

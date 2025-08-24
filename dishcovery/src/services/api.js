@@ -496,7 +496,7 @@ export async function filterByCountry(country) {
   const area = AREA_SYNONYMS[norm] || titleCase(norm);
 
   try {
-    const { data } = await api.get(`/filtr.php?a=${encodeURIComponent(area)}`);
+    const { data } = await api.get(`/filter.php?a=${encodeURIComponent(area)}`);
     let meals = data?.meals || [];
 
     // If synonym path failed, try raw Title Case as fallback

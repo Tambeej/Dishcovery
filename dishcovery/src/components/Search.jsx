@@ -39,6 +39,7 @@ function Search({ recipeStore }) {
           {" "}
           Find →{" "}
         </button>
+
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
 
