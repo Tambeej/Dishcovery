@@ -21,6 +21,12 @@ function Header() {
             on <br></br>your personal food preferences and the ingredients you already have
             at home
           </p>
+           <button
+                  className="btn btn-main mt-3"
+                  href="window.location.href = '#search'"
+                >
+                  Lets Start
+                </button>
           <Link to="#search">Lets Start</Link>
         </div>
       </div>
