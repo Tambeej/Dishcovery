@@ -16,13 +16,13 @@
   animation: bounce 1.5s infinite;
 }
 
-h1 {
+.coming-soon-container h1 {
   font-size: 3em;
   margin: 20px 0 10px 0;
   color: #d35400;
 }
 
-p {
+.coming-soon-container p {
   font-size: 1.2em;
   color: #555;
 }

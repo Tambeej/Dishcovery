@@ -1,6 +1,9 @@
 html {
   scroll-behavior: smooth;
 }
+.nav-link .text-light{
+  
+}
 .hero-section {
   position: relative;
   width: 100%;
