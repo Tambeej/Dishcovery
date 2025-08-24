@@ -26,7 +26,7 @@ const RandomMeals = observer(() => {
             <img src={meal.image} alt={meal.title} className="meal-img" />
             <div className="meal-overlay">
               <h3>{meal.title}</h3>
-              <p>{meal.instructions?.slice(0, 60)}...</p>
+              <p>{meal.instructions?.slice(0, 50)}...</p>
             </div>
           </div>
         ))}

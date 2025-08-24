@@ -19,6 +19,7 @@ import ProtectedRoute from "./auth/protectedRoute";
 import Recipe from "./pages/Recipe";
 import RecipesPage from "./pages/RecipesPage";
 import Terms from "./pages/Terms";
+import ComingSoon from "./pages/ComingSoon";
 import "./App.css";
 import AuthBridge from "./boot/AuthBridge";
 import user from "./stores/userStore";
@@ -29,7 +30,7 @@ function App() {
       <Provider {...rootStore}>
         <Router>
           <AuthBridge />
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col d-flex flex-column min-vh-100">
             <TopBar />
             {/* <Header /> */}
             <main className="flex-grow-1">
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/ingredients/:name" element={<IngredientPage />} />
                 <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} />
                 <Route path="/terms" element={<Terms />} />
+                <Route path="/comingsoon" element={<ComingSoon />} />
 
                 {/* <Route path="/search" element={<RecipesPage />} />           */}
                 {<Route path="/login" element={<Login />} />}

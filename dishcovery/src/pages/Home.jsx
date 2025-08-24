@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import Categories from "../components/Categories";
-import LatestMeals from "../components/LatestMeals";
+// import LatestMeals from "../components/LatestMeals";
 import Ingredients from "../components/Ingredients";
 import RandomMeals from "../components/RandomMeals";
 // import Blog from "../components/Blog";
@@ -15,7 +15,7 @@ const Home = () => (
     <Categories />
     <RandomMeals />
     <Ingredients />
-    <LatestMeals />
+    {/* <LatestMeals /> */}
     {/* <Blog /> */}
   </div>
 );
