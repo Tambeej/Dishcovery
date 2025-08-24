@@ -8,7 +8,6 @@ import CountryInput from "./CountryInput";
 import DishNameInput from "./DishNameInput";
 import RecipeCard from "./RecipeCard";
 
-
 function Search({ recipeStore }) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState([]);
@@ -35,28 +34,28 @@ function Search({ recipeStore }) {
           <CategoryInput onChange={setCategory} />
           <CountryInput onChange={setCountry} />
           <DishNameInput onChange={setDishName} />
-          <button className="btn-main" onClick={handleSearch}> Find → </button>
+          <button className="btn-main" onClick={handleSearch}>
+            {" "}
+            Find →{" "}
+          </button>
         </div>
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
 
-        {/* <div className="row">
-          {recipeStore.recipes.map((recipe) => (
-            <div
-              key={recipe.idMeal}
-              className="d-flex flex-wrap justify-content-centercol-12 col-md-3 mb-4"
-            >
-              <RecipeCard recipe={recipe} />
-            </div>
-          ))}
-        </div>*/}
-        <div className="row">
-          {recipeStore.recipes.map((recipe) => (
-             <div key={recipe.idMeal} className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"> 
-              <RecipeCard recipe={recipe} />
-            </div>
-          ))}
-        </div>
+        {recipeStore.recipes.length > 0 ? (
+          <div className="row">
+            {recipeStore.recipes.map((recipe) => (
+              <div
+                key={recipe.idMeal}
+                className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"
+              >
+                <RecipeCard recipe={recipe} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No Results Found</p>
+        )}
       </div>
     </div>
   );
