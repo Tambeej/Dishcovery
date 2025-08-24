@@ -13,7 +13,9 @@ function Search({ recipeStore }) {
   const [category, setCategory] = useState([]);
   const [country, setCountry] = useState([]);
   const [dishName, setDishName] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
   const handleSearch = async () => {
+    setHasSearched(true);
     const params = {
       ingredients: ingredients,
       categories: category,
@@ -43,20 +45,21 @@ function Search({ recipeStore }) {
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
 
-        {recipeStore.recipes.length > 0 ? (
-          <div className="row">
-            {recipeStore.recipes.map((recipe) => (
-              <div
-                key={recipe.idMeal}
-                className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"
-              >
-                <RecipeCard recipe={recipe} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No Results Found</p>
-        )}
+        {hasSearched &&
+          (recipeStore.recipes.length > 0 ? (
+            <div className="row">
+              {recipeStore.recipes.map((recipe) => (
+                <div
+                  key={recipe.idMeal}
+                  className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"
+                >
+                  <RecipeCard recipe={recipe} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No Results Found</p>
+          ))}
       </div>
     </div>
   );
