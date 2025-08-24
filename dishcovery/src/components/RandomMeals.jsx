@@ -17,7 +17,7 @@ const RandomMeals = observer(() => {
    
       <h2>Random Meals</h2>
       <div className="meals-grid">
-        {recipeStore.randomMeals.map((meal) => (
+        {recipeStore.randomMeals.map((meal) => (          
           <div
             key={meal.id}
             className="meal-card"
@@ -26,7 +26,7 @@ const RandomMeals = observer(() => {
             <img src={meal.image} alt={meal.title} className="meal-img" />
             <div className="meal-overlay">
               <h3>{meal.title}</h3>
-              <p>{meal.instructions?.slice(0, 100)}...</p>
+              <p>{meal.instructions?.slice(0, 60)}...</p>
             </div>
           </div>
         ))}

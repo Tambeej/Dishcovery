@@ -43,8 +43,8 @@ function App() {
                 <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/category/:category" element={<RecipesPage />} />
 
-                {/* <Route path="/ingredients/:name" element={<Ingredients />} />
-                <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} /> */}
+                <Route path="/ingredients/:name" element={<IngredientPage />} />
+                <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} />
                 <Route path="/terms" element={<Terms />} />
 
                 {/* <Route path="/search" element={<RecipesPage />} />           */}
