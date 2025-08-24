@@ -22,7 +22,7 @@ import Recipe from "./pages/Recipe";
 import RecipesPage from "./pages/RecipesPage";
 import Terms from "./pages/Terms";
 import "./App.css";
-import TopBar from "./components/TopBar";
+
 import AuthBridge from "./boot/AuthBridge";
 function App() {
   return (
