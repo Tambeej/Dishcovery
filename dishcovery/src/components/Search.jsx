@@ -34,11 +34,11 @@ function Search({ recipeStore }) {
           <CategoryInput onChange={setCategory} />
           <CountryInput onChange={setCountry} />
           <DishNameInput onChange={setDishName} />
-          <button className="btn-main" onClick={handleSearch}>
-            {" "}
-            Find →{" "}
-          </button>
         </div>
+        <button className="btn-main" onClick={handleSearch}>
+          {" "}
+          Find →{" "}
+        </button>
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
 
