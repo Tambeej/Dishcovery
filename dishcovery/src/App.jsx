@@ -29,7 +29,7 @@ function App() {
       <Provider {...rootStore}>
         <Router>
           <AuthBridge />
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col d-flex flex-column min-vh-100">
             {
               <TopBar
                 isLoggedIn={rootStore.userStore.isLoggedIn}
@@ -37,7 +37,7 @@ function App() {
               />
             }
             {/* <Header /> */}
-            <main className="flex-grow">
+            <main className="flex-grow-1">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/recipe/:id" element={<Recipe />} />

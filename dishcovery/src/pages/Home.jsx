@@ -13,9 +13,9 @@ const Home = () => (
     <Header />
     <Search />
     <Categories />
-    <LatestMeals />
-    <Ingredients />
     <RandomMeals />
+    <Ingredients />
+    <LatestMeals />
     {/* <Blog /> */}
   </div>
 );
