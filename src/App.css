@@ -1,0 +1,33 @@
+.container-fluid {
+  min-height: 90vh;
+  display: flex; /* flexbox layout */
+  flex-direction: column;
+  padding: 0;
+}
+.container {
+  max-width: 1170px;
+  margin: auto; /* horizontal centering */
+  flex: 1; /* take available height */
+  display: flex; /* flex inside container */
+  justify-content: center; /* horizontal align */
+  align-items: center; /* vertical align */
+  text-align: center;
+  flex-direction: column;
+}
+.btn-main, .btn-success{
+  background-color: #00C16D;
+  color: white;
+  border: solid 1px #00C16D;
+}
+.btn-main:hover, .btn-success:hover{
+  background-color: transparent;
+  color:#00C16D;
+border: solid 1px #00C16D;
+}
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+}

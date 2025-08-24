@@ -1,0 +1,39 @@
+#recipes-page h1, #recipe-page h1{    
+  background-color: #0006;
+    padding: 10%;
+    border-radius: 10px;
+  }
+.hero {
+  background: url("/img/hero.jpg") center/cover no-repeat;
+  color: #fff;
+}
+
+.recipe-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  min-width: 350px;
+}
+
+.recipe-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+#recipe-page .hero-section .container-fluid {
+    min-height: 50vh;
+}
+
+.hero-section nav {
+  background: rgba(0, 0, 0, 0.3); 
+}
+a {
+    color: #00C16D;
+    text-decoration: none;
+}
+
+.card-header{
+  background-color: #00C16D;
+}
+.card-body{
+  text-align: left
+}

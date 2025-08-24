@@ -1,0 +1,70 @@
+#random-meals.container-fluid {
+  min-height: 60vh;
+}
+#random-meals h2 {
+  color: #fff !important;
+}
+
+.random-meals {
+  background: url("/img/bg/greenBG.png") center/cover no-repeat;
+}
+#latest-meals.random-meals {
+  background: url("/img/bg/lightBG.png") center/cover no-repeat;
+}
+
+
+.random-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.meals-grid {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.meal-card {
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  flex: 1 1 210px; /* ✅ flexible base size */
+  max-width: 220px;
+  min-width: 150px;
+}
+.meal-card:nth-child(2),
+.meal-card:nth-child(4) {
+  transform: scale(0.85);
+}
+.meal-card:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.meal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.meal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  opacity: 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.meal-card:hover .meal-overlay {
+  opacity: 1;
+}

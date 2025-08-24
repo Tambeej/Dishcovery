@@ -1,0 +1,7 @@
+.card {
+  border: none;
+}
+.card:hover > p {
+  color: #00c16d;
+  font-weight: bold;
+}

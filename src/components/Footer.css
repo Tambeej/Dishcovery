@@ -1,0 +1,16 @@
+.footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-logo img {
+  max-height: 40px;
+}
+
+.footer-nav li a:hover {
+  color: #ff9800; 
+}
+
+.footer-info {
+  margin-top: 1rem;
+  color: #aaa;
+}

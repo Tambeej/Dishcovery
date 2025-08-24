@@ -1,0 +1,33 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+h2 {
+  color: #00c16d;
+  margin-bottom: 3rem;
+}
+button {
+  background-color: #00c16d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+  background-color: #00c16d !important;
+  border-color: #00c16d !important;
+  opacity: 1;
+}
