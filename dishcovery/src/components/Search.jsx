@@ -8,6 +8,7 @@ import CountryInput from "./CountryInput";
 import DishNameInput from "./DishNameInput";
 import RecipeCard from "./RecipeCard";
 
+
 function Search({ recipeStore }) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState([]);
