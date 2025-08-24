@@ -21,13 +21,17 @@ function Header() {
             on <br></br>your personal food preferences and the ingredients you already have
             at home
           </p>
-           <button
-                  className="btn btn-main mt-3"
-                  href="window.location.href = '#search'"
-                >
-                  Lets Start
-                </button>
-          <Link to="#search">Lets Start</Link>
+          <button
+            className="btn btn-main mt-3"
+            onClick={() => {
+              const searchEl = document.getElementById("search");
+              if (searchEl) {
+                searchEl.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Lets Start
+          </button>
         </div>
       </div>
     </header>

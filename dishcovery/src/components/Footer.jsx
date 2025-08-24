@@ -3,7 +3,7 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer bg-dark text-light">
+    <footer className="footer mt-auto py-3 bg-dark text-light">
       <div className="container py-4 d-flex flex-column align-items-center">
         {/* Logo */}
         <Link to="/" className="footer-logo mb-3">

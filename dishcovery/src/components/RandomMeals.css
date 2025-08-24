@@ -8,6 +8,10 @@
 .random-meals {
   background: url("/img/bg/greenBG.png") center/cover no-repeat;
 }
+#latest-meals.random-meals {
+  background: url("/img/bg/lightBG.png") center/cover no-repeat;
+}
+
 
 .random-title {
   font-size: 2rem;

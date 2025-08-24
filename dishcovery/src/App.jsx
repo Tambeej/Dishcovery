@@ -29,7 +29,7 @@ function App() {
       <Provider {...rootStore}>
         <Router>
           <AuthBridge />
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col d-flex flex-column min-vh-100">
             {
               <TopBar
                 isLoggedIn={rootStore.userStore.isLoggedIn}
@@ -37,14 +37,14 @@ function App() {
               />
             }
             {/* <Header /> */}
-            <main className="flex-grow">
+            <main className="flex-grow-1">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/category/:category" element={<RecipesPage />} />
 
-                {/* <Route path="/ingredients/:name" element={<Ingredients />} />
-                <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} /> */}
+                <Route path="/ingredients/:name" element={<IngredientPage />} />
+                <Route path="/recipes/ingredient/:ingredient" element={<RecipesPage />} />
                 <Route path="/terms" element={<Terms />} />
 
                 {/* <Route path="/search" element={<RecipesPage />} />           */}
