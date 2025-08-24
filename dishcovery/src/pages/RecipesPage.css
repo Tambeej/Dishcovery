@@ -12,6 +12,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 0.75rem;
   overflow: hidden;
+  min-width: 350px;
 }
 
 .recipe-card:hover {
