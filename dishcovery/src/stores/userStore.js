@@ -136,6 +136,7 @@ class UserStore {
 
   // ===== Computeds =====
   get isLoggedIn() {
+    console.log(!!this.authUser);
     return !!this.authUser;
   }
 
@@ -147,6 +148,27 @@ class UserStore {
 
   get favoriteIds() {
     return new Set(this.favorites.map((f) => String(f.recipe_id)));
+  }
+
+  // Best-effort display name from profile → user metadata → email → fallback
+  get displayName() {
+    // If you load a profile row with a name/full_name, prefer that
+    const p = this.profile;
+    if (p?.name) return p.name;
+    if (p?.full_name) return p.full_name;
+
+    // Supabase auth user metadata (from OAuth providers or your app)
+    const meta = this.authUser?.user_metadata || {};
+    if (meta.name) return meta.name;
+    if (meta.full_name) return meta.full_name;
+    if (meta.username) return meta.username;
+
+    // Fallback to the email local-part
+    const email = this.authUser?.email;
+    if (email) return email.split("@")[0];
+
+    // Last-resort fallback
+    return "User";
   }
 
   // ===== Auth wiring =====
@@ -264,6 +286,7 @@ class UserStore {
   async signOut() {
     if (typeof this._signOut === "function") {
       await this._signOut();
+      console.log("signed out");
     }
     // In case the provider event is delayed, proactively reset UI state
     this.reset();
