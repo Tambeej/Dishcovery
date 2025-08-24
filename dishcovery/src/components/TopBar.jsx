@@ -39,8 +39,8 @@ function TopBar() {
           <NavIconLink to="/login" icon="login.svg" label="Login | Signup" />
         ) : (
           <>
-            <span className="me-3">Hello, {displayName}</span>
-            <NavIconLink to="/profile" icon="user.svg" label="User" />
+            <span className="text-light me-3">Hello, {displayName}</span>
+            <NavIconLink to="/profile" icon="user.svg" label="Profile" />
             {/* IMPORTANT: no /logout route. Call signOut instead. */}
             <NavIconLink
               to="/"
