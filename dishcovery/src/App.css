@@ -24,6 +24,10 @@
   color:#00C16D;
 border: solid 1px #00C16D;
 }
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
 }
