@@ -8,7 +8,6 @@ import CountryInput from "./CountryInput";
 import DishNameInput from "./DishNameInput";
 import RecipeCard from "./RecipeCard";
 
-
 function Search({ recipeStore }) {
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState([]);
@@ -34,9 +33,13 @@ function Search({ recipeStore }) {
           <IngredientInput onChange={setIngredients} />
           <CategoryInput onChange={setCategory} />
           <CountryInput onChange={setCountry} />
-          <DishNameInput onChange={setDishName} />
-          <button className="btn-main" onClick={handleSearch}> Find → </button>
+          <DishNameInput onChange={setDishName} />{" "}
         </div>
+
+        <button className="btn-main" onClick={handleSearch}>
+          {" "}
+          Find →{" "}
+        </button>
         {recipeStore.loading && <LoadingSpinner />}
         {recipeStore.error && <ErrorMessage message={recipeStore.error} />}
 
@@ -52,7 +55,10 @@ function Search({ recipeStore }) {
         </div>*/}
         <div className="row">
           {recipeStore.recipes.map((recipe) => (
-             <div key={recipe.idMeal} className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"> 
+            <div
+              key={recipe.idMeal}
+              className="col-12 col-sm-6 col-lg-4 mb-5 mt-5"
+            >
               <RecipeCard recipe={recipe} />
             </div>
           ))}
