@@ -15,10 +15,10 @@ Styling: CSS modules (per component)
 Other: LocalStorage persistence, responsive UI, modular component architecture
 
 📂 Project Structure
-dishcovery/
-├─ public/               # Static assets (images, SVGs, logos, backgrounds)
-├─ src/
-│  ├─ auth/              # Auth provider & protected route wrapper
+dishcovery/\n
+├─ public/               # Static assets (images, SVGs, logos, backgrounds)\n
+├─ src/\n
+│  ├─ auth/              # Auth provider & protected route wrapper\n
 │  ├─ boot/              # Bootstrapping (AuthBridge, etc.)
 │  ├─ components/        # Reusable UI components (cards, inputs, navbar, etc.)
 │  ├─ pages/             # Route-level views (Home, Recipe, Profile, etc.)
